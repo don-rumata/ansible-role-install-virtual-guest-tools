@@ -1,2 +1,5 @@
 ---
-# tasks file for ansible-role-install-virtual-guest-tools
+- include_tasks: update-cache.yml
+  when: ansible_virtualization_type == 'docker'
+
+- include_tasks: install-guest-tools-4-{{ ansible_system_vendor | lower | replace(' ', '-') }}-{{ ansible_os_family | lower }}.yml

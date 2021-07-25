@@ -1,0 +1,168 @@
+---
+  - name: Install Virtual Guest Agents
+    hosts: all
+    strategy: free
+    serial:
+      - "100%"
+    tasks:
+
+# TODO. Допилить реализацию через ансибл того, что я реализовал через пошик.
+# https://pve.proxmox.com/wiki/Qemu-guest-agent
+# unWORK, TODO.
+    - name: Install QEMU guest agent 4 Windows
+      when:
+        - ansible_os_family == 'Windows'
+        - ansible_system_vendor == 'QEMU'
+      become: yes
+      become_method: runas
+      become_flags: logon_type=new_credentials logon_flags=netcredentials_only
+      vars:
+        # qery_virtio_win_paths: keys(path)[?contains(@, '2k8')]
+        # qery_virtio_win_paths:
+        #   "[?extension == '.cat']
+        #   | search('2k8')"
+        # qery_virtio_win_paths: '[?contains(path, `"2k8"`)]'
+        qery_virtio_win_paths: '[?contains(@, `"2k8"`)]'
+      block:
+        - set_fact:
+            windows_version_virtio_fact: 2k8
+          when: ansible_distribution_major_version == '6'
+        - set_fact:
+            windows_version_virtio_fact: w10
+          when: ansible_distribution_major_version == '10'
+        - win_find:
+            paths:
+              - \\10.10.10.10\drivers\other\virtio-win
+            recurse: yes
+            # file_type: file
+            # patterns: (.*cat.*)
+            patterns:
+              - .*cat$
+              # - .*{{ windows_version_virtio_fact }}.*
+              # - .*2k8.*
+            use_regex: yes
+            get_checksum: no
+          register: paths_to_all_drivers_virtio
+        - set_fact:
+            paths_to_all_drivers_virtio_facts: "{{ paths_to_all_drivers_virtio.files | json_query(qery_virtio_win_paths) }}"
+            # paths_to_all_drivers_virtio_facts: "{{ paths_to_all_drivers_virtio.files | regex_findall('.*2k8.*') }}"
+        - script: import-unsigned-virtio-kvm-qemu-drivers.ps1
+        #   register: test_pwsh_stdout
+          when: ansible_distribution_major_version == '6'
+          # changed_when: false
+# rsync://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-qemu-ga/
+# rsync://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-virtio/
+        - win_package:
+            path: \\10.10.10.10\soft\virtio-win\latest-qemu-ga\qemu-ga-{{ ansible_env.PROCESSOR_ARCHITECTURE }}.msi
+            # path: http://10.10.10.10/soft/virtio-win/latest-qemu-ga/qemu-ga-{{ ansible_env.PROCESSOR_ARCHITECTURE | lower }}.msi
+            # product_id: 'TODO'
+            state: present
+            wait: true
+        - win_package:
+            path: \\10.10.10.10\soft\virtio-win\latest-virtio\virtio-win-gt-x64.msi
+            # path: http://10.10.10.10/soft/virtio-win/latest-virtio/virtio-win-gt-x64.msi
+            # product_id: 'TODO'
+            state: present
+            wait: true
+          when:
+            - ansible_env.PROCESSOR_ARCHITECTURE == 'AMD64'
+            - ansible_distribution_major_version == '10'
+        - win_path:
+            elements:
+              - '{{ ansible_env.ProgramFiles }}\Qemu-ga'
+            state: present
+      tags:
+        - windows
+        - qemu
+        - guest
+        - kvm
+        - drivers
+        - msi
+
+    - name: Install QEMU balloon driver 4 Windows
+      when:
+        - ansible_os_family == 'Windows'
+        - ansible_system_vendor == 'QEMU'
+        - ansible_os_name in ['Microsoft Windows Server 2012 R2 Standard', 'Microsoft Windows Server 2012 R2 Datacenter']
+      become: yes
+      become_method: runas
+      become_flags: logon_type=new_credentials logon_flags=netcredentials_only
+      block:
+        - win_copy:
+            src: \\10.10.10.10\drivers\other\virtio-win\Balloon\2k12R2\amd64\
+            dest: '{{ ansible_env.ProgramFiles }}\Balloon'
+            remote_src: yes
+        - win_path:
+            elements:
+              - '%ProgramFiles%\Balloon'
+            state: present
+        - win_service:
+            name: BalloonService
+            path: '{{ ansible_env.ProgramFiles }}\Balloon\blnsvr.exe'
+            display_name: Balloon Service
+            description: 'https://wiki.archlinux.org/index.php/QEMU#Balloon_driver ; https://pve.proxmox.com/wiki/Dynamic_Memory_Management#Ballooning ; https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/virtualization_administration_guide/section-libvirt-dom-xml-memory-baloon-device'
+            start_mode: auto
+            state: started
+#        - win_command: blnsvr -i
+#          args:
+#            chdir: '{{ ansible_env.ProgramFiles }}\Balloon'
+      tags:
+        - windows
+        - qemu
+        - guest
+        - kvm
+        - drivers
+        - service
+        - balloon
+
+# TODO. Погуглить когда надо втыкать https://www.ovirt.org/documentation/how-to/guest-agent/install-the-guest-agent-in-ubuntu/ . Т.е. нужно ли втыкать пакет ovirt-guest-agent и одноимённый сервис.
+
+    # - local_action: shell wget -O - url: http://10.10.10.10/soft/virtualbox/LATEST-STABLE.TXT
+    #   register: virtualbox_latest_version
+    - local_action:
+        module: uri
+        url: http://10.10.10.10/soft/virtualbox/LATEST-STABLE.TXT
+        return_content: yes
+      register: virtualbox_latest_version
+      when:
+        - ansible_os_family == 'Windows'
+        - ansible_system_vendor == 'innotek GmbH'
+        - ansible_product_name == 'VirtualBox'
+
+    - name: Install VirtualBox guest utils 4 Windows
+      when:
+        - ansible_os_family == 'Windows'
+        - ansible_system_vendor == 'innotek GmbH'
+        - ansible_product_name == 'VirtualBox'
+      become: yes
+      become_method: runas
+      become_flags: logon_type=new_credentials logon_flags=netcredentials_only
+      block:
+        - debug:
+            msg: "{{ virtualbox_latest_version.content | replace('\n', '') }}"
+          register: virtualbox_latest_version
+        - debug:
+            msg: "{{ virtualbox_latest_version.msg }}"
+
+# https://serverfault.com/a/639147
+# https://stackoverflow.com/a/48308596
+#        - win_command: \\10.10.10.10\drivers\other\virtualbox\cert\vboxcertutil.exe add-trusted-publisher \\172.16.11.8\drivers\other\virtualbox\cert\*.cer
+#          ignore_errors: yes
+#        - win_command: certutil -addstore "TrustedPublisher" \\10.10.10.10\drivers\other\virtualbox\cert\{{ item }}
+#          with_items:
+#            - vbox-sha1.cer
+#            - vbox-sha256.cer
+        - win_certificate_store:
+            path: \\10.10.10.10\drivers\other\virtualbox\cert\{{ item }}
+            state: present
+            store_location: LocalMachine
+            store_name: TrustedPublisher
+          with_items:
+            - vbox-sha1.cer
+            - vbox-sha256.cer
+        - win_package:
+            path: \\10.10.10.10\drivers\other\virtualbox\vboxwindowsadditions-{{ ansible_env.PROCESSOR_ARCHITECTURE }}.exe
+            product_id: 'Oracle VM VirtualBox Guest Additions {{ virtualbox_latest_version.msg }}'
+            # creates_version: '{{ virtualbox_latest_version.msg }}'
+            arguments:
+              - /force /with_autologon /with_wddm /S
