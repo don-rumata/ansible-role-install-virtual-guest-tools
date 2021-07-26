@@ -6,6 +6,11 @@
       - "100%"
     tasks:
 
+# hyper-v ubuntu
+# https://gist.github.com/deoren/4d87ff5ddc831a22be433607341e5441
+# https://docs.microsoft.com/en-us/windows-server/virtualization/hyper-v/supported-ubuntu-virtual-machines-on-hyper-v
+# https://wiki.ubuntu.com/Hyper-V
+
 # TODO. Допилить реализацию через ансибл того, что я реализовал через пошик.
 # https://pve.proxmox.com/wiki/Qemu-guest-agent
 # unWORK, TODO.
