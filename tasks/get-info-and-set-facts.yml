@@ -1,0 +1,30 @@
+---
+- name: Get service facts 4 Linux
+  when: ansible_system == 'Linux'
+  service_facts:
+
+- name: Get VirtualBox available version
+  when:
+    - ansible_system == 'Linux'
+    - ansible_virtualization_type == 'virtualbox'
+  uri:
+    url: '{{ virtualbox_url_version }}'
+    method: GET
+    return_content: yes
+  register: virtualbox_available_version
+
+- name: Set facts about available virtualbox version
+  when:
+    - ansible_system == 'Linux'
+    - ansible_virtualization_type == 'virtualbox'
+  set_fact:
+    virtualbox_available_version_fact:
+      "{{ virtualbox_available_version.content | trim }}"
+
+- name: Set facts about virtualbox guest additions version
+  when:
+    - ansible_system == 'Linux'
+    - ansible_virtualization_type == 'virtualbox'
+  set_fact:
+    virtualbox_guest_additions_iso_url_fact:
+      '{{ virtualbox_url_path_to_files }}/VBoxGuestAdditions_{{ virtualbox_available_version_fact }}.iso'

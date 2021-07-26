@@ -1,0 +1,96 @@
+---
+# https://linuxhint.com/install-virtualbox-guest-additions-centos/
+# https://stackoverflow.com/a/30120360/5430535
+- name: Add EPEL repo
+  when:
+    - ansible_system == 'Linux'
+    - ansible_virtualization_role == 'guest'
+    - ansible_facts.services['vboxadd-service.service'] is not defined
+  become: yes
+  package:
+    name:
+      - epel-release
+    state: present
+
+- name: Install dependencies 4 run VBoxLinuxAdditions.run
+  when:
+    - ansible_system == 'Linux'
+    - ansible_virtualization_role == 'guest'
+    - ansible_facts.services['vboxadd-service.service'] is not defined
+    # - ansible_facts.services['vboxadd-service.service'].state != 'running'
+  become: yes
+  package:
+    name:
+      - gcc
+      - kernel-devel
+      - kernel-headers
+      - dkms
+      - make
+      - bzip2
+      - perl
+    state: present
+
+- name: Download VirtualBox VBoxGuestAdditions.iso
+  when:
+    - ansible_system == 'Linux'
+    - ansible_virtualization_role == 'guest'
+    - ansible_facts.services['vboxadd-service.service'] is not defined
+    # - ansible_facts.services['vboxadd-service.service'].state != 'running'
+  vars:
+    vboxguestadditions_iso_local_path: /tmp/vboxguestadditions.iso
+  become: yes
+  get_url:
+    url: '{{ virtualbox_guest_additions_iso_url_fact }}'
+    dest: '{{ vboxguestadditions_iso_local_path }}'
+
+- name: Create temporary directory 4 mount VBoxGuestAdditions.iso
+  when:
+    - ansible_system == 'Linux'
+    - ansible_virtualization_role == 'guest'
+    - ansible_facts.services['vboxadd-service.service'] is not defined
+    # - ansible_facts.services['vboxadd-service.service'].state != 'running'
+  tempfile:
+    state: directory
+    suffix: _vboxguestadditions
+  register: tmp_dir_for_mount_vboxguestadditions
+
+- name: Mount VBoxGuestAdditions.iso read-only
+  when:
+    - ansible_system == 'Linux'
+    - ansible_virtualization_role == 'guest'
+    - ansible_facts.services['vboxadd-service.service'] is not defined
+    # - ansible_facts.services['vboxadd-service.service'].state != 'running'
+  vars:
+    vboxguestadditions_iso_local_path: /tmp/vboxguestadditions.iso
+  become: yes
+  mount:
+    path: '{{ tmp_dir_for_mount_vboxguestadditions.path }}'
+    src: '{{ vboxguestadditions_iso_local_path }}'
+    fstype: iso9660
+    opts: ro,noauto
+    state: mounted
+
+- name: Install VirtualBox Guest Additions
+  when:
+    - ansible_system == 'Linux'
+    - ansible_virtualization_role == 'guest'
+    - ansible_facts.services['vboxadd-service.service'] is not defined
+    # - ansible_facts.services['vboxadd-service.service'].state != 'running'
+  become: yes
+  shell: ./VBoxLinuxAdditions.run --nox11
+  args:
+    chdir: '{{ tmp_dir_for_mount_vboxguestadditions.path }}'
+
+- name: Delete mount VBoxGuestAdditions.iso read-only
+  when:
+    - ansible_system == 'Linux'
+    - ansible_virtualization_role == 'guest'
+    - ansible_facts.services['vboxadd-service.service'] is not defined
+    # - ansible_facts.services['vboxadd-service.service'].state != 'running'
+  vars:
+    vboxguestadditions_iso_local_path: /tmp/vboxguestadditions.iso
+  become: yes
+  mount:
+    path: '{{ tmp_dir_for_mount_vboxguestadditions.path }}'
+    src: '{{ vboxguestadditions_iso_local_path }}'
+    state: absent

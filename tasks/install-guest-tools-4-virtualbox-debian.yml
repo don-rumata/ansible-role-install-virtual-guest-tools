@@ -1,0 +1,13 @@
+---
+- name: Install VirtualBox guest utils 4 Ubuntu
+  when:
+    - ansible_system == 'Linux'
+    - ansible_virtualization_role == 'guest'
+  become: yes
+  package:
+    name:
+      - virtualbox-guest-dkms
+      - virtualbox-guest-utils
+      # TODO. https://ru.stackoverflow.com/q/1113754
+      # - virtualbox-guest-x11
+    state: present
