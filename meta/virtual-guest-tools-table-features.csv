@@ -2,12 +2,8 @@
 **Ubuntu**,,,,,,
 focal,:heavy_check_mark:,:heavy_check_mark:,:construction:,:construction:,:construction:,:construction:
 bionic,:heavy_check_mark:,:heavy_check_mark:,:construction:,:construction:,:construction:,:construction:
-xenial,:heavy_check_mark:,:heavy_check_mark:,:construction:,:construction:,:construction:,:construction:
 **Debian**,,,:construction:,:construction:,:construction:,:construction:
-stretch,:heavy_check_mark:,:heavy_check_mark:,:construction:,:construction:,:construction:,:construction:
 buster,:heavy_check_mark:,:heavy_check_mark:,:construction:,:construction:,:construction:,:construction:
-stable,:heavy_check_mark:,:heavy_check_mark:,:construction:,:construction:,:construction:,:construction:
-testing,:heavy_check_mark:,:heavy_check_mark:,:construction:,:construction:,:construction:,:construction:
 **EL (CentOS)**,,,:construction:,:construction:,:construction:,:construction:
 8,:heavy_check_mark:,:heavy_check_mark:,:construction:,:construction:,:construction:,:construction:
 **openSUSE**,,,:construction:,:construction:,:construction:,:construction:

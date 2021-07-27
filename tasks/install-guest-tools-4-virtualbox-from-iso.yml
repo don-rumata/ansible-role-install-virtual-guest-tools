@@ -2,7 +2,6 @@
 - name: Download VirtualBox VBoxGuestAdditions.iso
   when:
     - ansible_system == 'Linux'
-    - ansible_virtualization_role == 'guest'
     - ansible_facts.services['vboxadd-service.service'] is not defined
       or
       ansible_facts.services['vboxadd-service.service'].state != 'running'
@@ -16,7 +15,6 @@
 - name: Create temporary directory 4 mount VBoxGuestAdditions.iso
   when:
     - ansible_system == 'Linux'
-    - ansible_virtualization_role == 'guest'
     - ansible_facts.services['vboxadd-service.service'] is not defined
       or
       ansible_facts.services['vboxadd-service.service'].state != 'running'
@@ -28,7 +26,6 @@
 - name: Mount VBoxGuestAdditions.iso read-only
   when:
     - ansible_system == 'Linux'
-    - ansible_virtualization_role == 'guest'
     - ansible_facts.services['vboxadd-service.service'] is not defined
       or
       ansible_facts.services['vboxadd-service.service'].state != 'running'
@@ -45,7 +42,6 @@
 - name: Install VirtualBox Guest Additions
   when:
     - ansible_system == 'Linux'
-    - ansible_virtualization_role == 'guest'
     - ansible_facts.services['vboxadd-service.service'] is not defined
       or
       ansible_facts.services['vboxadd-service.service'].state != 'running'
@@ -57,7 +53,6 @@
 - name: Delete mount VBoxGuestAdditions.iso read-only
   when:
     - ansible_system == 'Linux'
-    - ansible_virtualization_role == 'guest'
     - ansible_facts.services['vboxadd-service.service'] is not defined
       or
       ansible_facts.services['vboxadd-service.service'].state != 'running'

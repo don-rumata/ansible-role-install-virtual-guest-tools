@@ -1,0 +1,52 @@
+---
+- name: Install\Update PDFtoPrinter 4 Windows
+  when: ansible_os_family == 'Windows'
+  become: yes
+  become_method: runas
+  become_flags: logon_type=new_credentials logon_flags=netcredentials_only
+  win_get_url:
+    url: '{{ virtualbox_guest_additions_iso_url_fact }}'
+    dest: '{{ ansible_env.TMP }}\{{ virtualbox_guest_additions_iso_url_fact | urlsplit('path') | basename }}'
+
+- name: Ensure an ISO is mounted
+  when:
+    - ansible_os_family == 'Windows'
+    - ansible_distribution_major_version == '10'
+  become: yes
+  become_method: runas
+  become_flags: logon_type=new_credentials logon_flags=netcredentials_only
+  win_disk_image:
+    # image_path: C:\install.iso
+    image_path: \\172.16.11.8\soft\virtualbox\latest-stable\vboxguestadditions_latest.iso
+    state: present
+  register: disk_image_out
+
+- name: Ensure an ISO is mounted
+  when:
+    - ansible_os_family == 'Windows'
+    - ansible_distribution_major_version == '10'
+  become: yes
+  become_method: runas
+  become_flags: logon_type=new_credentials logon_flags=netcredentials_only
+  win_certificate_store:
+    path: \\10.10.10.10\drivers\other\virtualbox\cert\{{ item }}
+    state: present
+    store_location: LocalMachine
+    store_name: TrustedPublisher
+  with_items:
+    - vbox-sha1.cer
+    - vbox-sha256.cer
+
+- name: Ensure an ISO is mounted
+  when:
+    - ansible_os_family == 'Windows'
+    # - ansible_distribution_major_version == '10'
+  become: yes
+  become_method: runas
+  become_flags: logon_type=new_credentials logon_flags=netcredentials_only
+  win_package:
+    path: \\10.10.10.10\drivers\other\virtualbox\vboxwindowsadditions-{{ ansible_env.PROCESSOR_ARCHITECTURE }}.exe
+    product_id: 'Oracle VM VirtualBox Guest Additions {{ virtualbox_latest_version.msg }}'
+    # creates_version: '{{ virtualbox_latest_version.msg }}'
+    arguments:
+      - /force /with_autologon /with_wddm /S

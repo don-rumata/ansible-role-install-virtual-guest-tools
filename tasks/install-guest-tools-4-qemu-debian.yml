@@ -4,7 +4,6 @@
     - ansible_distribution == 'Ubuntu'
     - ansible_system_vendor == 'QEMU'
     - ansible_virtualization_type == 'kvm'
-    - ansible_virtualization_role == 'guest'
   become: yes
   block:
     - apt:

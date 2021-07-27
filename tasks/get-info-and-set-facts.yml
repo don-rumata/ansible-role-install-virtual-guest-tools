@@ -3,49 +3,53 @@
   when: ansible_system == 'Linux'
   service_facts:
 
+- name: Check VBoxService is installed
+  when:
+    - ansible_os_family == 'Windows'
+    - ansible_virtualization_type == 'VirtualBox'
+  win_service:
+    name: VBoxService
+  register: win_virtualbox_service_info
+
 - name: Get VirtualBox available version
   when:
-    - ansible_system == 'Linux'
     - ansible_virtualization_type == 'virtualbox'
+      or
+      ansible_virtualization_type == 'VirtualBox'
   uri:
     url: '{{ virtualbox_url_version }}'
     method: GET
     return_content: yes
   register: virtualbox_available_version
+  delegate_to: localhost
 
 - name: Set facts about available virtualbox version
   when:
-    - ansible_system == 'Linux'
     - ansible_virtualization_type == 'virtualbox'
+      or
+      ansible_virtualization_type == 'VirtualBox'
   set_fact:
     virtualbox_available_version_fact:
       "{{ virtualbox_available_version.content | trim }}"
+  delegate_to: localhost
 
 - name: Set facts about virtualbox guest additions version
   when:
-    - ansible_system == 'Linux'
     - ansible_virtualization_type == 'virtualbox'
+      or
+      ansible_virtualization_type == 'VirtualBox'
   set_fact:
     virtualbox_guest_additions_iso_url_fact:
       '{{ virtualbox_url_path_to_files }}/VBoxGuestAdditions_{{ virtualbox_available_version_fact }}.iso'
+  delegate_to: localhost
 
-#---
-
-# TODO
-# - set_fact:
-#     virtualbox_service_name_fact: virtualbox2.service
+# {{ virtualbox_guest_additions_iso_url_fact | urlsplit('path') | basename }}
+# - name: Set facts about virtualbox guest additions filename
 #   when:
-#     - ansible_os_family == 'Debian'
-#     - ansible_pkg_mgr == 'apt'
-
-# - set_fact:
-#     virtualbox_service_name_fact: httpd.service
-#   when:
-#     - ansible_os_family == 'RedHat'
-#     - ansible_pkg_mgr == 'dnf'
-
-# - set_fact:
-#     virtualbox_service_name_fact: virtualbox2.service
-#   when:
-#     - ansible_os_family == 'Suse'
-#     - ansible_pkg_mgr == 'zypper'
+#     - ansible_virtualization_type == 'virtualbox'
+#       or
+#       ansible_virtualization_type == 'VirtualBox'
+#   set_fact:
+#     virtualbox_guest_additions_iso_url_fact:
+#       '{{ virtualbox_url_path_to_files }}/VBoxGuestAdditions_{{ virtualbox_available_version_fact }}.iso'
+#   delegate_to: localhost

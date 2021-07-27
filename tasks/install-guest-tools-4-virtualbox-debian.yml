@@ -1,64 +1,82 @@
 ---
-- name: Install dependencies 4 run VBoxLinuxAdditions.run
-  when:
-    - ansible_distribution == "Debian"
-    - ansible_virtualization_role == 'guest'
-    # - ansible_facts.services['vboxadd-service.service'] is not defined
-    #   or
-    #   ansible_facts.services['vboxadd-service.service'].state != 'running'
-  become: yes
-  package:
-    name:
-      - linux-headers-{{ ansible_kernel }}
-    state: present
-
-- name: Config dependences config file 4 Ubuntu 18.04, Debian 10
+- name: Configure pin file 4 Debian\Ubuntu
   when:
     - ansible_os_family == 'Debian'
-    - ansible_virtualization_role == 'guest'
   become: yes
   copy:
     dest: /etc/apt/preferences.d/dependences-4-virtualbox
     mode: '644'
     content: |
-      # https://askubuntu.com/a/1205535
+      # https://unix.stackexchange.com/a/329843
+      Package: fasttrack-archive-keyring
+      Pin: release a={{ ansible_distribution_release }}-backports
+      # Pin-Priority: -1
+      Pin-Priority: 500
+
       Package: virtualbox-guest-dkms
-      Pin: origin deb.debian.org release a=sid
+      Pin: origin fasttrack.debian.net
       Pin-Priority: 500
 
       # https://wiki.debian.org/ru/AptPreferences#A.2BBB8EQAQ4BDwENQRHBDAEPQQ4BE8_.2BBD4EQg_ZugSchlus
       Package: virtualbox-guest-utils
-      Pin: origin deb.debian.org release a=sid
+      Pin: origin fasttrack.debian.net
       Pin-Priority: 500
+    backup: yes
 
-# https://unix.stackexchange.com/a/286937
-# https://packages.debian.org/search?suite=all&arch=any&searchon=names&keywords=virtualbox
-- name: Add repo sid backports 4 Debian
+# https://backports.debian.org/Instructions/
+- name: Add repo backports 4 Debian Buster
   when:
-    - ansible_distribution == "Debian"
-    - ansible_virtualization_role == 'guest'
+    - ansible_distribution == 'Debian'
+    - ansible_distribution_release == 'buster'
   become: yes
   apt_repository:
-    repo: 'deb {{ http_or_https }}://deb.debian.org/debian sid main contrib non-free'
+    repo: deb {{ http_or_https }}://deb.debian.org/debian {{ ansible_distribution_release }}-backports main
     state: present
-    filename: sid
+    filename: '{{ ansible_distribution_release }}-backports'
 
-- name: Install VirtualBox guest utils
+- name: Install GPG keys 4 fasttrack repo 4 Debian
   when:
-    - ansible_os_family == 'Debian'
-    - ansible_virtualization_role == 'guest'
+    - ansible_distribution == 'Debian'
+    - ansible_distribution_release == 'buster'
   become: yes
   package:
     name:
+      - fasttrack-archive-keyring
+    state: present
+
+# https://fasttrack.debian.net/
+# https://unix.stackexchange.com/a/286937
+- name: Add repo fasttrak 4 Debian Buster
+  when:
+    - ansible_distribution == 'Debian'
+    - ansible_distribution_release == 'buster'
+  become: yes
+  apt_repository:
+    repo: "{{ item }}"
+    state: present
+    filename: fasttrack
+  with_items:
+    - deb {{ http_or_https }}://fasttrack.debian.net/debian/ {{ ansible_distribution_release }}-fasttrack main contrib
+    # - deb {{ http_or_https }}://fasttrack.debian.net/debian/ {{ ansible_distribution_release }}-backports main contrib
+
+- name: Install VirtualBox guest utils 4 Debian\Ubuntu
+  when:
+    - ansible_os_family == 'Debian'
+  become: yes
+  package:
+    name:
+      - linux-headers-{{ ansible_kernel }}
       - virtualbox-guest-dkms
       - virtualbox-guest-utils
       # TODO. https://ru.stackoverflow.com/q/1113754
       # - virtualbox-guest-x11
     state: present
+  register: virtualbox_guest_installed_status
 
-# - include_tasks: install-guest-tools-4-virtualbox-from-iso.yml
-#   when:
-#     - ansible_system == 'Linux'
-#     - ansible_distribution == "Debian"
-#     # - ansible_distribution_major_version == '8'
-#     - ansible_virtualization_role == 'guest'
+- name: Once reboot, because it FUCKIN DIRTY HACK!!!
+  when:
+    - ansible_distribution == 'Debian'
+    - ansible_distribution_release == 'buster'
+    - virtualbox_guest_installed_status.changed
+  become: yes
+  reboot:

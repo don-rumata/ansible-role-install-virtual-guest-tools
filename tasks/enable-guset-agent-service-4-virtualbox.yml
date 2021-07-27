@@ -1,7 +1,7 @@
+---
 - name: Enable virtualbox guest agent
   when:
     - ansible_os_family == 'Debian'
-    - ansible_virtualization_role == 'guest'
   become: yes
   # При первом запуске сразу после установки может не отпахать. Надо ребутнуть тачку. Я пока хз как это отпарсить.
   service:
@@ -12,7 +12,6 @@
 - name: Enable virtualbox guest agent
   when:
     - ansible_os_family == 'Suse'
-    - ansible_virtualization_role == 'guest'
   become: yes
   service:
     name: vboxadd-service.service
@@ -24,7 +23,6 @@
   when:
     - ansible_os_family == 'RedHat'
     - ansible_distribution == 'CentOS'
-    - ansible_virtualization_role == 'guest'
   become: yes
   service:
     name: vboxadd.service
@@ -36,7 +34,6 @@
   when:
     - ansible_os_family == 'RedHat'
     - ansible_distribution == 'Fedora'
-    - ansible_virtualization_role == 'guest'
   become: yes
   service:
     name: "{{ item }}"

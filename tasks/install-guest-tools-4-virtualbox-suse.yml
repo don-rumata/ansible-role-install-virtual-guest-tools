@@ -3,7 +3,6 @@
 - name: Install VirtualBox guest utils 4 openSUSE
   when:
     - ansible_system == 'Linux'
-    - ansible_virtualization_role == 'guest'
   become: yes
   package:
     name:

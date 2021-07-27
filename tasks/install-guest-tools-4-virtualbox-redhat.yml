@@ -5,7 +5,6 @@
   when:
     - ansible_distribution == "CentOS"
     # - ansible_distribution_major_version == '8'
-    - ansible_virtualization_role == 'guest'
     - ansible_facts.services['vboxadd-service.service'] is not defined
       or
       ansible_facts.services['vboxadd-service.service'].state != 'running'
@@ -18,7 +17,6 @@
 - name: Install dependencies 4 run VBoxLinuxAdditions.run
   when:
     - ansible_distribution == 'CentOS'
-    - ansible_virtualization_role == 'guest'
     - ansible_facts.services['vboxadd-service.service'] is not defined
       or
       ansible_facts.services['vboxadd-service.service'].state != 'running'
@@ -37,7 +35,6 @@
 - name: Install virtualbox-guest-additions 4 Fedora
   when:
     - ansible_distribution == "Fedora"
-    - ansible_virtualization_role == 'guest'
   become: yes
   package:
     name:
@@ -49,4 +46,3 @@
     - ansible_system == 'Linux'
     - ansible_distribution == "CentOS"
     # - ansible_distribution_major_version == '8'
-    - ansible_virtualization_role == 'guest'
