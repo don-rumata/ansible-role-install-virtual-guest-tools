@@ -28,3 +28,24 @@
   set_fact:
     virtualbox_guest_additions_iso_url_fact:
       '{{ virtualbox_url_path_to_files }}/VBoxGuestAdditions_{{ virtualbox_available_version_fact }}.iso'
+
+#---
+
+# TODO
+# - set_fact:
+#     virtualbox_service_name_fact: virtualbox2.service
+#   when:
+#     - ansible_os_family == 'Debian'
+#     - ansible_pkg_mgr == 'apt'
+
+# - set_fact:
+#     virtualbox_service_name_fact: httpd.service
+#   when:
+#     - ansible_os_family == 'RedHat'
+#     - ansible_pkg_mgr == 'dnf'
+
+# - set_fact:
+#     virtualbox_service_name_fact: virtualbox2.service
+#   when:
+#     - ansible_os_family == 'Suse'
+#     - ansible_pkg_mgr == 'zypper'

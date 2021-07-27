@@ -20,9 +20,10 @@
     # enabled: yes
     state: started
 
-- name: Enable virtualbox guest agent
+- name: Enable virtualbox guest agent 4 CentOS 8+
   when:
     - ansible_os_family == 'RedHat'
+    - ansible_distribution == 'CentOS'
     - ansible_virtualization_role == 'guest'
   become: yes
   service:
@@ -30,3 +31,18 @@
     # # Warning: The unit file, source configuration file or drop-ins of vboxadd-service.service changed on disk.
     # enabled: yes
     state: started
+
+- name: Enable virtualbox guest agent 4 Fedora
+  when:
+    - ansible_os_family == 'RedHat'
+    - ansible_distribution == 'Fedora'
+    - ansible_virtualization_role == 'guest'
+  become: yes
+  service:
+    name: "{{ item }}"
+    # # Warning: The unit file, source configuration file or drop-ins of vboxadd-service.service changed on disk.
+    enabled: yes
+    state: started
+  with_items:
+    # - vboxclient.service
+    - vboxservice.service

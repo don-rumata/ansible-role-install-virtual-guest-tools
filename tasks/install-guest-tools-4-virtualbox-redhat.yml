@@ -17,6 +17,7 @@
 
 - name: Install dependencies 4 run VBoxLinuxAdditions.run
   when:
+    - ansible_distribution == 'CentOS'
     - ansible_virtualization_role == 'guest'
     - ansible_facts.services['vboxadd-service.service'] is not defined
       or
