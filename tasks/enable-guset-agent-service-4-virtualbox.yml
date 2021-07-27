@@ -3,7 +3,6 @@
   when:
     - ansible_os_family == 'Debian'
   become: yes
-  # При первом запуске сразу после установки может не отпахать. Надо ребутнуть тачку. Я пока хз как это отпарсить.
   service:
     name: virtualbox-guest-utils.service
     enabled: yes
@@ -37,7 +36,6 @@
   become: yes
   service:
     name: "{{ item }}"
-    # # Warning: The unit file, source configuration file or drop-ins of vboxadd-service.service changed on disk.
     enabled: yes
     state: started
   with_items:
