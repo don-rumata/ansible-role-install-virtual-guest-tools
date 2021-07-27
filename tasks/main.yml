@@ -4,6 +4,14 @@
 
 - include_tasks: get-info-and-set-facts.yml
 
+# - include_tasks: add-repo-4-{{ ansible_virtualization_type }}-{{ ansible_os_family | lower }}.yml
+#   when:
+#     - ansible_os_family == 'Debian'
+#       or
+#       ansible_os_family == 'RedHat'
+#     - ansible_virtualization_role == 'guest'
+#     - ansible_virtualization_type == 'virtualbox'
+
 - include_tasks: install-guest-tools-4-{{ ansible_virtualization_type }}-{{ ansible_os_family | lower }}.yml
 
 - include_tasks: enable-guset-agent-service-4-{{ ansible_virtualization_type }}.yml

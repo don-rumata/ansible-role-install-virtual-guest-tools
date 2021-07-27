@@ -1,11 +1,11 @@
 ---
-#--- QEMU\KVM section ---#
+#--- QEMU\KVM settings ---#
 # Windows only
 virtual_guest_tools_virtio_win_amd64_msi_url: https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-virtio/virtio-win-gt-x64.msi
 virtual_guest_tools_qemu_ga_win_amd64_msi_url: https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-qemu-ga/qemu-ga-x86_64.msi
 
 
-#--- VirtualBox section ---#
+#--- VirtualBox settings ---#
 
 # https://github.com/don-rumata/ansible-role-install-virtualbox
 
@@ -18,3 +18,8 @@ virtualbox_url_prefix: https://download.virtualbox.org/virtualbox
 virtualbox_url_version: '{{ virtualbox_url_prefix }}/{{ virtualbox_edition | upper }}.TXT'
 
 virtualbox_url_path_to_files: '{{ virtualbox_url_prefix }}/{{ virtualbox_available_version_fact }}'
+
+#--- Repo settings ---#
+# If you *NOT* use apt-cacher-ng or other caching proxy - select "https".
+http_or_https: http
+# http_or_https: https
