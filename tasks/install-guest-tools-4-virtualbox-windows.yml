@@ -1,4 +1,23 @@
 ---
+- name: Set fact about virtualbox guest iso content root path
+  when:
+    - ansible_os_family == 'Windows'
+    - ansible_virtualization_type == 'virtualbox'
+      or
+      ansible_virtualization_type == 'VirtualBox'
+    - not (win_virtualbox_service_info.exists)
+  block:
+    # 4 win10
+    - set_fact:
+        virtualbox_guest_additions_iso_content_root_path_fact:
+          '{{ disk_image_out.mount_path }}'
+      when: ansible_distribution_major_version == '10'
+    # 4 win7
+    - set_fact:
+        virtualbox_guest_additions_iso_content_root_path_fact:
+          '{{ ansible_env.TMP }}\vboxwindowsadditions'
+      when: ansible_distribution_major_version == '6'
+
 - name: Download {{ virtualbox_guest_additions_iso_basename_fact }} 4 Windows
   when:
     - ansible_os_family == 'Windows'
@@ -13,7 +32,7 @@
     url: '{{ virtualbox_guest_additions_iso_url_fact }}'
     dest: '{{ vboxguestadditions_full_path_to_save }}'
 
-- name: Ensure an ISO is mounted
+- name: Ensure an ISO is mounted 4 Windows 10
   when:
     - ansible_os_family == 'Windows'
     - ansible_distribution_major_version == '10'
@@ -29,17 +48,33 @@
     state: present
   register: disk_image_out
 
-- name: Add trusted certificates to local machine
+- name: Exract iso over 7-zip 4 Windows 7
   when:
     - ansible_os_family == 'Windows'
-    - ansible_distribution_major_version == '10'
+    - ansible_distribution_major_version == '6'
+    - not (win_virtualbox_service_info.exists)
+  become: yes
+  become_method: runas
+  become_flags: logon_type=new_credentials logon_flags=netcredentials_only
+  vars:
+    vboxguestadditions_full_path_to_save:
+      '{{ ansible_env.TMP }}\{{ virtualbox_guest_additions_iso_basename_fact }}'
+  win_command:
+    '7z x -y
+    {{ vboxguestadditions_full_path_to_save }}
+    -o{{ virtualbox_guest_additions_iso_content_root_path_fact }}'
+  args:
+    chdir: '{{ ansible_env.ProgramFiles }}\7-Zip'
+
+- name: Add trusted certificates to local machine 4 Windows
+  when:
+    - ansible_os_family == 'Windows'
     - not (win_virtualbox_service_info.exists)
   become: yes
   become_method: runas
   become_flags: logon_type=new_credentials logon_flags=netcredentials_only
   win_certificate_store:
-    # path: \\10.10.10.10\drivers\other\virtualbox\cert\{{ item }}
-    path: '{{ disk_image_out.mount_path }}\cert\{{ item }}'
+    path: '{{ virtualbox_guest_additions_iso_content_root_path_fact }}\cert\{{ item }}'
     state: present
     store_location: LocalMachine
     store_name: TrustedPublisher
@@ -47,16 +82,15 @@
     - vbox-sha1.cer
     - vbox-sha256.cer
 
-- name: Install VirtualBox Guest Additions
+- name: Install VirtualBox Guest Additions 4 Windows
   when:
     - ansible_os_family == 'Windows'
-    # - ansible_distribution_major_version == '10'
     - not (win_virtualbox_service_info.exists)
   become: yes
   become_method: runas
   become_flags: logon_type=new_credentials logon_flags=netcredentials_only
   win_package:
-    path: '{{ disk_image_out.mount_path }}\vboxwindowsadditions-{{ ansible_env.PROCESSOR_ARCHITECTURE }}.exe'
+    path: '{{ virtualbox_guest_additions_iso_content_root_path_fact }}\vboxwindowsadditions-{{ ansible_env.PROCESSOR_ARCHITECTURE }}.exe'
     # product_id: 'Oracle VM VirtualBox Guest Additions {{ virtualbox_available_version_fact }}'
     creates_service: VBoxService
     arguments:
