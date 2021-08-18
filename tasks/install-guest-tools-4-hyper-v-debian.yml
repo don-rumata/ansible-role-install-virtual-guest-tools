@@ -1,0 +1,12 @@
+---
+# https://gist.github.com/deoren/4d87ff5ddc831a22be433607341e5441
+- name: Install Hyper-V guest utils 4 Debian\Ubuntu
+  when:
+    - ansible_os_family == 'Debian'
+  become: yes
+  package:
+    name:
+      - linux-cloud-tools-virtual
+      # ???
+      # - cloud-guest-utils
+    state: present

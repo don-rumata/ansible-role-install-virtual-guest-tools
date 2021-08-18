@@ -1,0 +1,10 @@
+---
+- name: Install KVM guest utils 4 Debian\Ubuntu
+  when:
+    - ansible_os_family == 'Debian'
+  become: yes
+  package:
+    name:
+      - qemu-guest-agent
+      - cloud-guest-utils
+    state: present

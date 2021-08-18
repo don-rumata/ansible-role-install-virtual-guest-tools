@@ -1,0 +1,11 @@
+---
+- name: Enable QEMU guest agent 4 Debian\Ubuntu
+  when:
+    - ansible_os_family == 'Debian'
+  become: yes
+  service:
+    name: "{{ item }}"
+    enabled: yes
+    state: started
+  with_items:
+    - qemu-guest-agent
