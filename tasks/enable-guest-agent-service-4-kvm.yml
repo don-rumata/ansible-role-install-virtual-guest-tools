@@ -1,13 +1,22 @@
 ---
-- name: Enable QEMU guest agent 4 Debian\Ubuntu
+- name: Enable QEMU guest agent 4 Debian\Ubuntu\Fedora\RHEL
   when:
     - ansible_os_family == 'Debian'
       or
       ansible_os_family == 'RedHat'
   become: yes
   service:
-    name: "{{ item }}"
+    name: qemu-guest-agent
     enabled: yes
     state: started
-  with_items:
-    - qemu-guest-agent
+
+# Why does the service have such a crooked name?
+# https://youtu.be/gqqm9CMKrA4
+- name: Enable QEMU guest agent 4 openSUSE
+  when:
+    - ansible_os_family == 'Suse'
+  become: yes
+  service:
+    name: qemu-ga@virtio\x2dports-org.qemu.guest_agent.0.service
+    enabled: yes
+    state: started

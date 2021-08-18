@@ -1,7 +1,7 @@
 ---
-- name: Install KVM guest utils 4 CentOS\RHEL\Fedora
+- name: Install KVM guest utils 4 openSUSE
   when:
-    - ansible_os_family == 'RedHat'
+    - ansible_os_family == 'Suse'
   become: yes
   package:
     name:
