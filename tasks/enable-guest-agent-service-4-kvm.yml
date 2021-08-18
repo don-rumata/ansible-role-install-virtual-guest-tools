@@ -2,6 +2,8 @@
 - name: Enable QEMU guest agent 4 Debian\Ubuntu
   when:
     - ansible_os_family == 'Debian'
+      or
+      ansible_os_family == 'RedHat'
   become: yes
   service:
     name: "{{ item }}"

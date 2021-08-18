@@ -1,0 +1,9 @@
+---
+- name: Install KVM guest utils 4 Debian\Ubuntu
+  when:
+    - ansible_os_family == 'RedHat'
+  become: yes
+  package:
+    name:
+      - qemu-guest-agent
+    state: present
