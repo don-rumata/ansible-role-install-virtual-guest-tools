@@ -1,0 +1,69 @@
+---
+- name: Download VirtIO .cat 4 Windows
+  when:
+    - ansible_os_family == 'Windows'
+    - ansible_system_vendor == 'QEMU'
+  become: yes
+  become_method: runas
+  become_flags: logon_type=new_credentials logon_flags=netcredentials_only
+  win_get_url:
+    url: "{{ item }}"
+    dest: '{{ ansible_env.TMP }}'
+  with_items:
+    - '{{ virtual_guest_tools_virtio_certs_urls }}'
+  register: download_virtio_certs_result
+
+- name: Get the paths of the downloaded certs
+  when:
+    - ansible_os_family == 'Windows'
+    - ansible_system_vendor == 'QEMU'
+  set_fact:
+    download_virtio_certs_result_fact:
+      "{{ download_virtio_certs_result
+      | json_query(query_download_virtio_certs_result) }}"
+  vars:
+    query_download_virtio_certs_result:
+      "results[].dest"
+
+- name: Install VirtIO certs 4 Windows
+  when:
+    - ansible_os_family == 'Windows'
+    - ansible_system_vendor == 'QEMU'
+  become: yes
+  become_method: runas
+  become_flags: logon_type=new_credentials logon_flags=netcredentials_only
+  win_certificate_store:
+    path: "{{ item }}"
+    state: present
+    store_location: LocalMachine
+    store_name: TrustedPublisher
+  with_items:
+    - '{{ download_virtio_certs_result_fact }}'
+
+- name: Install KVM guest utils 4 Windows
+  when:
+    - ansible_os_family == 'Windows'
+    - ansible_system_vendor == 'QEMU'
+  become: yes
+  become_method: runas
+  become_flags: logon_type=new_credentials logon_flags=netcredentials_only
+  win_package:
+    path: '{{ virtual_guest_tools_qemu_ga_win_amd64_msi_url }}'
+    # product_id: QEMU guest agent
+    creates_service: QEMU-GA
+    state: present
+    wait: true
+
+- name: Install VirtIO guest utils 4 Windows
+  when:
+    - ansible_os_family == 'Windows'
+    - ansible_system_vendor == 'QEMU'
+  become: yes
+  become_method: runas
+  become_flags: logon_type=new_credentials logon_flags=netcredentials_only
+  win_package:
+    path: '{{ virtual_guest_tools_virtio_win_amd64_msi_url }}'
+    # product_id: Virtio-win-driver-installer
+    creates_service: BalloonService
+    state: present
+    wait: true

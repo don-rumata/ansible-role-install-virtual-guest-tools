@@ -1,9 +1,14 @@
 ---
 #--- QEMU\KVM settings ---#
+
 # Windows only
 virtual_guest_tools_virtio_win_amd64_msi_url: https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-virtio/virtio-win-gt-x64.msi
 virtual_guest_tools_qemu_ga_win_amd64_msi_url: https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-qemu-ga/qemu-ga-x86_64.msi
 
+virtual_guest_tools_virtio_certs_urls:
+  # - https://www.spice-space.org/download/windows/qxl-wddm-dod/qxl-wddm-dod-0.20/amd64/qxldod.cat
+  - https://fedorapeople.org/groups/virt/unattended/drivers/preinst/virtio-win/0.1.171/w10/amd64/qxldod.cat
+  - https://fedorapeople.org/groups/virt/unattended/drivers/preinst/virtio-win/0.1.171/w10/amd64/viostor.cat
 
 #--- VirtualBox settings ---#
 

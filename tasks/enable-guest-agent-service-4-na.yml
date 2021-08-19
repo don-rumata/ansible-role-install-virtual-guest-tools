@@ -1,0 +1,24 @@
+---
+- name: Enable QEMU guest agent 4 Windows
+  when:
+    - ansible_os_family == 'Windows'
+    - ansible_system_vendor == 'QEMU'
+  become: yes
+  become_method: runas
+  become_flags: logon_type=new_credentials logon_flags=netcredentials_only
+  win_service:
+    name: QEMU-GA
+    start_mode: auto
+    state: started
+
+- name: Enable Balloon Service 4 Windows
+  when:
+    - ansible_os_family == 'Windows'
+    - ansible_system_vendor == 'QEMU'
+  become: yes
+  become_method: runas
+  become_flags: logon_type=new_credentials logon_flags=netcredentials_only
+  win_service:
+    name: BalloonService
+    start_mode: auto
+    state: started
