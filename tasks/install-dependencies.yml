@@ -1,0 +1,122 @@
+---
+- name: Install python3-pip 4 Linux
+  when:
+    - ansible_system == 'Linux'
+  become: yes
+  package:
+    name:
+      - python3-pip
+    state: present
+  register: python3_pip_installed_status
+
+- name: Install python3-setuptools 4 CentOS 7\RHEL
+  when:
+    - ansible_os_family == 'RedHat'
+    - ansible_pkg_mgr == 'yum'
+  vars:
+    # https://stackoverflow.com/a/47091066/5430535
+    # https://github.com/ansible/ansible/issues/32532#issuecomment-341641007
+    ansible_python_interpreter: /usr/bin/python2.7
+  become: yes
+  package:
+    name:
+      - python-setuptools
+    state: present
+  register: python3_setuptools_installed_status
+
+# https://groups.google.com/forum/#!topic/ansible-project/yO8dmKvNUIY
+# https://github.com/ansible-ThoTeam/nexus3-oss/issues/205
+- name: Install jmespath 4 CentOS 8+\RHEL\Suse
+  when:
+    - ansible_system == 'Linux'
+    # - ansible_os_family == 'RedHat'
+    - ansible_os_family in ['RedHat', 'Suse']
+  become: yes
+  pip:
+    name:
+      - jmespath
+    state: present
+    # Because python3-pip
+    executable: pip3
+  register: jmespath_centos_8_installed_status
+
+# https://groups.google.com/forum/#!topic/ansible-project/yO8dmKvNUIY
+# https://github.com/ansible-ThoTeam/nexus3-oss/issues/205
+- name: Install jmespath 4 Linux
+  when:
+    - ansible_system == 'Linux'
+  # become: yes
+  pip:
+    name:
+      - jmespath
+    state: present
+    # Because python3-pip
+    executable: pip3
+  register: jmespath_linux_installed_status
+
+- name: Install GPG agent 4 deb-based distro
+  when:
+    - ansible_os_family == 'Debian'
+    - ansible_pkg_mgr == 'apt'
+    - ansible_architecture == 'x86_64'
+  become: yes
+  apt:
+    name: gnupg-agent
+    state: present
+
+- name: Create directory structure 4 test in docker
+  when:
+    - ansible_system == 'Linux'
+    - ansible_virtualization_type == 'docker'
+  become: yes
+  file:
+    path: /usr/share/man/man1
+    state: directory
+
+# https://stackoverflow.com/a/52780480
+- name: Install /etc/os-release helper 4 CentOS\RHEL\Fedora
+  when:
+    - ansible_os_family == 'RedHat'
+  #   - ansible_pkg_mgr == 'yum'
+  # vars:
+  #   # https://stackoverflow.com/a/47091066/5430535
+  #   # https://github.com/ansible/ansible/issues/32532#issuecomment-341641007
+  #   ansible_python_interpreter: /usr/bin/python2.7
+  become: yes
+  package:
+    name:
+      - redhat-lsb-core
+    state: present
+  register: redhat_lsb_core_installed_status
+
+- name: Install /etc/os-release helper 4 openSUSE Leap\Tumbleweed
+  when:
+    - ansible_system == 'Linux'
+    - ansible_os_family == 'Suse'
+    - ansible_pkg_mgr == 'zypper'
+  become: yes
+  package:
+    name:
+      - lsb-release
+    state: present
+  register: opensuse_lsb_release_installed_status
+
+# https://ru.stackoverflow.com/q/1166293
+- name: Clear gathered facts from all currently targeted hosts
+  when:
+    - (python3_pip_installed_status is changed)
+      or (python3_setuptools_installed_status is changed)
+      or (redhat_lsb_core_installed_status is changed)
+      or (jmespath_centos_8_installed_status is changed)
+      or (jmespath_linux_installed_status is changed)
+      or (opensuse_lsb_release_installed_status is changed)
+  block:
+    - meta: clear_facts
+    - setup:
+
+# - debug:
+#     msg: "{{ ansible_lsb }}"
+
+# - name: Pause 4 debug
+#   pause:
+#     echo: yes
