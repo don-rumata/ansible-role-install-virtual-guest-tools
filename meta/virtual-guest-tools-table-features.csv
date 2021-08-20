@@ -2,16 +2,17 @@
 **Ubuntu**,,,,,,
 focal,:heavy_check_mark:,:heavy_check_mark:,:construction:,:construction:,:construction:,:construction:
 bionic,:heavy_check_mark:,:heavy_check_mark:,:construction:,:construction:,:construction:,:construction:
-**Debian**,,,:construction:,:construction:,:construction:,:construction:
+**Debian**,,,,,,
 buster,:heavy_check_mark:,:heavy_check_mark:,:construction:,:construction:,:construction:,:construction:
-**EL (CentOS)**,,,:construction:,:construction:,:construction:,:construction:
+bullseye,:heavy_check_mark:,:heavy_check_mark:,:construction:,:construction:,:construction:,:construction:
+**EL (CentOS)**,,,,,,
 8,:heavy_check_mark:,:heavy_check_mark:,:construction:,:construction:,:construction:,:construction:
-**openSUSE**,,,:construction:,:construction:,:construction:,:construction:
-tumbleweed,:heavy_check_mark:,:heavy_check_mark:,:construction:,:construction:,:construction:,:construction:
+**openSUSE**,,,,,,
+tumbleweed,:heavy_check_mark:,,:construction:,:construction:,:construction:,:construction:
 leap,:heavy_check_mark:,:heavy_check_mark:,:construction:,:construction:,:construction:,:construction:
-**Fedora**,,,:construction:,:construction:,:construction:,:construction:
+**Fedora**,,,,,,
 33,:heavy_check_mark:,:heavy_check_mark:,:construction:,:construction:,:construction:,:construction:
-34,:heavy_check_mark:,:heavy_check_mark:,:construction:,:construction:,:construction:,:construction:
+34,,,,,,
 **Windows**,,,,,,
-7,:construction:,:construction:,:construction:,:construction:,:construction:,:construction:
-10,:construction:,:heavy_check_mark:,:construction:,:construction:,:construction:,:construction:
+7,:heavy_check_mark:,:heavy_check_mark:,:construction:,:construction:,:construction:,:construction:
+10,,,,,,
