@@ -15,7 +15,6 @@
   when:
     - ansible_os_family == 'Windows'
     - ansible_system_vendor == 'QEMU'
-    - ansible_distribution_major_version != '6'
   become: yes
   become_method: runas
   become_flags: logon_type=new_credentials logon_flags=netcredentials_only

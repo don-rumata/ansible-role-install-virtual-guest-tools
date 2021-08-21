@@ -6,7 +6,7 @@ virtual_guest_tools_virtio_win_amd64_msi_url: https://fedorapeople.org/groups/vi
 virtual_guest_tools_qemu_ga_win_amd64_msi_url: https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-qemu-ga/qemu-ga-x86_64.msi
 
 # Win7 only. https://askubuntu.com/a/1355273/457538
-virtual_guest_tools_virtio_win_win7_amd64_msi_url: https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.173-4/virtio-win-gt-x64.msi
+virtual_guest_tools_virtio_win_win7_amd64_msi_url: https://www.spice-space.org/download/windows/spice-guest-tools/spice-guest-tools-latest.exe
 
 virtual_guest_tools_virtio_certs_urls:
   # - https://www.spice-space.org/download/windows/qxl-wddm-dod/qxl-wddm-dod-0.20/amd64/qxldod.cat

@@ -4,8 +4,6 @@
 
 - import_tasks: install-dependencies.yml
 
-- include_tasks: set-facts.yml
-
 - include_tasks: get-info-and-set-facts.yml
 
 - include_tasks: install-guest-tools-4-{{ ansible_virtualization_type | lower }}-{{ ansible_os_family | lower }}.yml
