@@ -1,0 +1,15 @@
+---
+# Скорее всего есть более красивый вариант, но я умею только так. :-( Откройте тикет, если знаете как.
+- set_fact:
+    virtual_guest_tools_virtio_win_url_fact: "{{ virtual_guest_tools_virtio_win_win7_amd64_msi_url }}"
+  when:
+    - ansible_os_family == 'Windows'
+    - ansible_system_vendor == 'QEMU'
+    - ansible_distribution_major_version == '6'
+
+- set_fact:
+    virtual_guest_tools_virtio_win_url_fact: "{{ virtual_guest_tools_virtio_win_amd64_msi_url }}"
+  when:
+    - ansible_os_family == 'Windows'
+    - ansible_system_vendor == 'QEMU'
+    - ansible_distribution_major_version == '10'

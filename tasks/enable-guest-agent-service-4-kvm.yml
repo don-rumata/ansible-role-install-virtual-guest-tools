@@ -6,7 +6,7 @@
       ansible_os_family == 'RedHat'
   become: yes
   service:
-    name: qemu-guest-agent
+    name: qemu-guest-agent.service
     enabled: yes
     state: started
 
