@@ -1,38 +1,139 @@
-Role Name
-=========
+# Ansible role: Install virtual guest tools 4 many VMs environments
 
-A brief description of the role goes here.
+[![License][license-image]][license-url] [![Ansible Galaxy][ansible-galaxy-image]][ansible-galaxy-url] [![Ansible Galaxy Quality][ansible-galaxy-quality-image]][ansible-galaxy-url] [![Ansible Galaxy Release][ansible-galaxy-release-image]][ansible-galaxy-url]
 
-Requirements
-------------
+Install guest tools for VitualBox, QEMU\KVM, Xen, VMware, Parallels in Linux and Windows.
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+## Work on
 
-Role Variables
---------------
+### Ansible Galaxy style
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+```yaml
+  platforms:
+    - name: Fedora
+      versions:
+        - 33
+        - 34
+    - name: Ubuntu
+      versions:
+        - bionic
+        - focal
+    - name: Debian
+      version:
+        - buster
+        - bullseye
+        - stable
+        - oldstable
+    - name: EL
+      versions:
+        - 8
+    - name: opensuse
+      vesrion:
+        - 15.3
+        # TODO
+        # - tumbleweed
+    - name: Windows
+      version:
+        - 2008x64 (7 64bit)
+        - 2008x86 (7 32bit)
+        - 2019 (10 64bit)
+```
 
-Dependencies
-------------
+### Table style
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+- :heavy_check_mark: - work, tested, ok.
+- :construction: - TODO. Work in progress.
+- :x: - not work. Don't try.
 
-Example Playbook
-----------------
+## Requirements
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+[min_ansible_version: 2.8](https://docs.ansible.com/ansible/latest/modules/flatpak_module.html)
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+## Role Variables
 
-License
--------
+```yaml
+---
+#--- QEMU\KVM settings ---#
 
-BSD
+# Windows only
+virtual_guest_tools_virtio_win_amd64_msi_url: https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-virtio/virtio-win-gt-x64.msi
+virtual_guest_tools_qemu_ga_win_amd64_msi_url: https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-qemu-ga/qemu-ga-x86_64.msi
+virtual_guest_tools_spice_webdavd_win_amd64_msi_url: https://www.spice-space.org/download/windows/spice-webdavd/spice-webdavd-x64-latest.msi
 
-Author Information
-------------------
+# Win7 only. https://askubuntu.com/a/1355273/457538
+virtual_guest_tools_virtio_win_win7_amd64_msi_url: https://www.spice-space.org/download/windows/spice-guest-tools/spice-guest-tools-latest.exe
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+virtual_guest_tools_virtio_certs_urls:
+  # - https://www.spice-space.org/download/windows/qxl-wddm-dod/qxl-wddm-dod-0.20/amd64/qxldod.cat
+  - https://fedorapeople.org/groups/virt/unattended/drivers/preinst/virtio-win/0.1.171/w10/amd64/qxldod.cat
+  - https://fedorapeople.org/groups/virt/unattended/drivers/preinst/virtio-win/0.1.171/w10/amd64/viostor.cat
+
+#--- VirtualBox settings ---#
+
+# https://github.com/don-rumata/ansible-role-install-virtualbox
+
+virtualbox_edition: latest-stable
+# virtualbox_edition: latest-beta
+# virtualbox_edition: latest
+
+virtualbox_url_prefix: https://download.virtualbox.org/virtualbox
+
+virtualbox_url_version: '{{ virtualbox_url_prefix }}/{{ virtualbox_edition | upper }}.TXT'
+
+virtualbox_url_path_to_files: '{{ virtualbox_url_prefix }}/{{ virtualbox_available_version_fact }}'
+
+#--- Repo settings ---#
+
+# If you *NOT* use apt-cacher-ng or other caching proxy - select "https".
+http_or_https: http
+# http_or_https: https
+```
+
+## Dependencies
+
+### If you want deploy to Windows 7
+
+Download and install [Windows Management Framework 5.1](https://www.microsoft.com/en-us/download/details.aspx?id=54616)
+
+## HowTo
+
+Quick config WinRM for Windows: <https://ru.stackoverflow.com/a/949971/191416>
+
+## Example Playbooks
+
+Install guest tools for any [supported](#Work-on) plaforms:
+
+`install-virtual-guest-tools.yml`:
+
+```yaml
+- name: Install virtual guest tools
+  hosts: all
+  strategy: free
+  serial:
+    - "100%"
+  roles:
+    - ansible-role-install-virtual-guest-tools
+  tasks:
+```
+
+## License
+
+Apache License, Version 2.0
+
+## Author Information
+
+[don Rumata](https://github.com/don-rumata)
+
+## TODO
+
+- Add tests.
+
+[license-image]: https://img.shields.io/github/license/don-rumata/ansible-role-install-virtual-guest-tools.svg
+[license-url]: https://opensource.org/licenses/Apache-2.0
+
+[ansible-galaxy-image]: https://img.shields.io/badge/ansible_galaxy-don__rumata.ansible__role__install__virtual-guest-tools-blue.svg
+[ansible-galaxy-url]: https://galaxy.ansible.com/don_rumata/ansible_role_install_virtual-guest-tools
+
+[ansible-galaxy-quality-image]: https://img.shields.io/ansible/quality/55766
+
+[ansible-galaxy-release-image]: https://img.shields.io/github/v/release/don-rumata/ansible-role-install-virtual-guest-tools.svg?include_prereleases
