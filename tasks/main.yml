@@ -25,3 +25,10 @@
     - ansible_virtualization_role != 'host'
       or
       ansible_virtualization_type == 'NA'
+
+- include_tasks: not-in-matrix.yml
+  when:
+    - ansible_system == 'Linux'
+    - ansible_virtualization_role == 'host'
+      or
+      ansible_virtualization_role == 'NA'

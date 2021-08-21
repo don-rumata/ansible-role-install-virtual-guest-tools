@@ -1,0 +1,4 @@
+---
+- name: Plug 4 bare metal environment
+  debug:
+    msg: "Good news, everyone! We are not in the Matrix"
