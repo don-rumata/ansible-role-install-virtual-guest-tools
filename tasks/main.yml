@@ -2,10 +2,26 @@
 - include_tasks: update-cache.yml
   when: ansible_virtualization_type == 'docker'
 
-- import_tasks: install-dependencies.yml
+- include_tasks: install-dependencies.yml
+  when:
+    - ansible_virtualization_role != 'host'
+      or
+      ansible_virtualization_type == 'NA'
 
 - include_tasks: get-info-and-set-facts.yml
+  when:
+    - ansible_virtualization_role != 'host'
+      or
+      ansible_virtualization_type == 'NA'
 
 - include_tasks: install-guest-tools-4-{{ ansible_virtualization_type | lower }}-{{ ansible_os_family | lower }}.yml
+  when:
+    - ansible_virtualization_role != 'host'
+      or
+      ansible_virtualization_type == 'NA'
 
 - include_tasks: enable-guest-agent-service-4-{{ ansible_virtualization_type | lower }}.yml
+  when:
+    - ansible_virtualization_role != 'host'
+      or
+      ansible_virtualization_type == 'NA'
