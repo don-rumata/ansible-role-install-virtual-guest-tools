@@ -11,7 +11,7 @@
     start_mode: auto
     state: started
 
-- name: Enable Balloon Service 4 Windows
+- name: Enable Balloon service 4 Windows
   when:
     - ansible_os_family == 'Windows'
     - ansible_system_vendor == 'QEMU'
@@ -22,3 +22,16 @@
     name: BalloonService
     start_mode: auto
     state: started
+
+# TODO. Надо ли его запускать? По-умолчанию сервис остановлен.
+# - name: Enable SPICE webdavd service 4 Windows
+#   when:
+#     - ansible_os_family == 'Windows'
+#     - ansible_system_vendor == 'QEMU'
+#   become: yes
+#   become_method: runas
+#   become_flags: logon_type=new_credentials logon_flags=netcredentials_only
+#   win_service:
+#     name: spice-webdavd
+#     start_mode: auto
+#     state: started

@@ -4,6 +4,7 @@
 # Windows only
 virtual_guest_tools_virtio_win_amd64_msi_url: https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-virtio/virtio-win-gt-x64.msi
 virtual_guest_tools_qemu_ga_win_amd64_msi_url: https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-qemu-ga/qemu-ga-x86_64.msi
+virtual_guest_tools_spice_webdavd_win_amd64_msi_url: https://www.spice-space.org/download/windows/spice-webdavd/spice-webdavd-x64-latest.msi
 
 # Win7 only. https://askubuntu.com/a/1355273/457538
 virtual_guest_tools_virtio_win_win7_amd64_msi_url: https://www.spice-space.org/download/windows/spice-guest-tools/spice-guest-tools-latest.exe

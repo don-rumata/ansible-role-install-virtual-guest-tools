@@ -13,7 +13,7 @@
     - '{{ virtual_guest_tools_virtio_certs_urls }}'
   register: download_virtio_certs_result
 
-# To install the spice client correctly
+# 2 install the spice client correctly
 - name: Copy vioser.cat from ansible role to Windows
   when:
     - ansible_os_family == 'Windows'
@@ -66,7 +66,7 @@
     creates_service: QEMU-GA
     state: present
     wait: true
-  register: qemu_ga_install_status
+  # register: qemu_ga_install_status
 
 - name: Install SPICE guest tools 4 Windows 7
   when:
@@ -84,7 +84,7 @@
     wait: true
     arguments:
       - /S
-  register: spice_install_status
+  # register: spice_install_status
 
 - name: Install VirtIO guest utils 4 Windows
   when:
@@ -100,7 +100,22 @@
     creates_service: BalloonService
     state: present
     wait: true
-  register: virtio_win_install_status
+  # register: virtio_win_install_status
+
+- name: Install SPICE webdavd 4 Windows
+  when:
+    - ansible_os_family == 'Windows'
+    - ansible_system_vendor == 'QEMU'
+  become: yes
+  become_method: runas
+  become_flags: logon_type=new_credentials logon_flags=netcredentials_only
+  win_package:
+    path: '{{ virtual_guest_tools_spice_webdavd_win_amd64_msi_url }}'
+    # product_id: spice webdavd
+    creates_service: spice-webdavd
+    state: present
+    wait: true
+  # register: spice_webdavd_install_status
 
 # - name: Reboot 4 QEMU GA start normally 4 Windows 7
 #   when:
@@ -110,6 +125,8 @@
 #     - qemu_ga_install_status.changed
 #       or
 #       spice_install_status.changed
+#       or
+#       spice_webdavd_install_status.changed
 #   become: yes
 #   become_method: runas
 #   become_flags: logon_type=new_credentials logon_flags=netcredentials_only
