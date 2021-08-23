@@ -1,0 +1,20 @@
+---
+- name: Add EPEL repo 4 CentOS 8+\RHEL
+  when:
+    - ansible_os_family == 'RedHat'
+    - ansible_pkg_mgr == 'dnf'
+    - ansible_distribution != 'Fedora'
+  become: yes
+  package:
+    name:
+      - epel-release
+    state: present
+
+- name: Install Xen guest utils 4 CentOS\RHEL\Fedora
+  when:
+    - ansible_os_family == 'RedHat'
+  become: yes
+  package:
+    name:
+      - xe-guest-utilities-latest
+    state: present

@@ -162,7 +162,9 @@ Install guest tools from **local** web\smb server:
 
 **VirtualBox**: VirtualBox v5.2.44
 
-**KVM**: Proxmox 6.4-13
+**KVM**: Proxmox v6.4-13
+
+**Xen**: XCP-ng v8.2
 
 ## License
 

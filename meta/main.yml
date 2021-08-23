@@ -56,5 +56,6 @@ galaxy_info:
     - guest
     - agent
     - guestagent
+    - xen
 
   dependencies: []

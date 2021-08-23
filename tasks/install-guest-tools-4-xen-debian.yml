@@ -1,0 +1,9 @@
+---
+- name: Install Xen guest utils 4 Debian\Ubuntu
+  when:
+    - ansible_os_family == 'Debian'
+  become: yes
+  package:
+    name:
+      - xe-guest-utilities
+    state: present

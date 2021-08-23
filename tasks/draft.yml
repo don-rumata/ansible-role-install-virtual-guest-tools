@@ -53,3 +53,6 @@ virtual_guest_tools_virtio_win_win7_amd64_msi_url: https://fedorapeople.org/grou
       # - /qn ADDLOCAL=FE_balloon_driver,FE_network_driver,FE_pvpanic_driver,FE_qemufwcfg_driver,FE_qemupciserial_driver,FE_qxl_driver,FE_spice_driver,FE_viorng_driver,FE_vioscsi_driver,FE_vioserial_driver,FE_viostor_driver
       - /S
   register: virtio_win_install_status
+
+# https://xenappblog.com/2018/download-and-install-latest-citrix-xenserver-tools/
+# https://pvupdates.vmd.citrix.com/updates.latest.tsv
