@@ -36,6 +36,7 @@ galaxy_info:
       version:
         - 2008x64
         - 2012R2
+        - 2019
 
   galaxy_tags:
     - virtual

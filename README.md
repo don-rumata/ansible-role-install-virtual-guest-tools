@@ -99,7 +99,25 @@ Download and install [Windows Management Framework 5.1](https://www.microsoft.co
 
 Quick config WinRM for Windows: <https://ru.stackoverflow.com/a/949971/191416>
 
+### How to install role
+
+Over `ansible-galaxy`:
+
+```bash
+ansible-galaxy install don_rumata.ansible_role_install_virtual_guest_tools
+```
+
+Over `bash+git`:
+
+```bash
+mkdir -p "$HOME/.ansible/roles"
+cd "$HOME/.ansible/roles"
+git clone https://github.com/don-rumata/ansible-role-install-virtual_guest_tools don_rumata.ansible_role_install_virtual_guest_tools
+```
+
 ## Example Playbooks
+
+### I
 
 Install guest tools for any [supported](#Work-on) plaforms:
 
@@ -115,6 +133,36 @@ Install guest tools for any [supported](#Work-on) plaforms:
     - ansible-role-install-virtual-guest-tools
   tasks:
 ```
+
+### II
+
+Install guest tools from **local** web\smb server:
+
+`install-virtual-guest-tools.yml`:
+
+```yaml
+  - name: Install Virtual Guest Agents
+    hosts: all
+    strategy: free
+    serial:
+      - "100%"
+    roles:
+      - role: ansible-role-install-virtual-guest-tools
+        virtual_guest_tools_virtio_win_amd64_msi_url: \\10.10.10.10\soft\virtio-win\latest-virtio\virtio-win-gt-x64.msi
+        virtual_guest_tools_qemu_ga_win_amd64_msi_url: \\10.10.10.10\soft\virtio-win\latest-qemu-ga\qemu-ga-x86_64.msi
+        virtual_guest_tools_virtio_win_win7_amd64_msi_url: http://10.10.10.10/soft/spice/spice-guest-tools-latest.exe
+        virtual_guest_tools_spice_webdavd_win_amd64_msi_url: http://10.10.10.10/soft/spice/spice-webdavd-x64-latest.msi
+        virtual_guest_tools_virtio_certs_urls:
+          - http://10.10.10.10/drivers/other/virtio-win/qxldod/w10/amd64/qxldod.cat
+          - http://10.10.10.10/drivers/other/virtio-win/viostor/w10/amd64/viostor.cat
+    tasks:
+```
+
+## Development and testing environments
+
+**VirtualBox**: VirtualBox v5.2.44
+
+**KVM**: Proxmox 6.4-13
 
 ## License
 
