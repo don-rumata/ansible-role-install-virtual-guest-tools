@@ -57,5 +57,8 @@ galaxy_info:
     - agent
     - guestagent
     - xen
+    - xcpng
+    - citrix
+    - xsenserver
 
   dependencies: []

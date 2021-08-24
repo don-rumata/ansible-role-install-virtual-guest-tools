@@ -1,0 +1,48 @@
+---
+- name: Download Xen tsv file with management agent urls 4 Windows
+  # when:
+  #   - ansible_os_family == 'Windows'
+  get_url:
+    url: "{{ virtual_guest_tools_xen_win_tsv_url }}"
+    dest: "{{ virtual_guest_tools_xen_win_tsv_path_to_save }}"
+  register: download_xen_tsv_result
+  delegate_to: localhost
+
+- name: Read users from CSV file and return a dictionary
+  # when:
+  #   - ansible_os_family == 'Windows'
+  read_csv:
+    path: "{{ virtual_guest_tools_xen_win_tsv_path_to_save }}"
+    dialect: excel-tab
+    fieldnames: url,version,size,arch,zero,hash
+  register: xen_updates_latest_tsv
+  delegate_to: localhost
+
+- name: Set facts from pvupdates.tsv.json
+  set_fact:
+    citrix_xen_management_agent_url_fact:
+      "{{ virtual_guest_tools_win_management_agent_url
+      | default(xen_updates_latest_tsv
+      | json_query(query_citrix_management_agent_url)) }}"
+    citrix_xen_management_agent_version_fact:
+      "{{ xen_updates_latest_tsv
+      | json_query(query_citrix_management_agent_version) }}"
+  vars:
+    query_citrix_management_agent_url:
+      "list[?arch=='x64'].url | [0]"
+    query_citrix_management_agent_version:
+      "list[?arch=='x64'].version | [0]"
+
+- name: Install Xen guest agent 4 Windows
+  when:
+    - ansible_os_family == 'Windows'
+  become: yes
+  become_method: runas
+  become_flags: logon_type=new_credentials logon_flags=netcredentials_only
+  win_package:
+    path: '{{ citrix_xen_management_agent_url_fact }}'
+    product_id: Citix XenServer Windows Management Agent
+    creates_service: XenSvc
+    # creates_version: "{{ citrix_xen_management_agent_version_fact }}"
+    state: present
+    wait: true

@@ -27,3 +27,14 @@
     name: qemu-ga@virtio\x2dports-org.qemu.guest_agent.0.service
     enabled: yes
     state: started
+
+- name: Enable Xen guest agent 4 Windows
+  when:
+    - ansible_os_family == 'Windows'
+  become: yes
+  become_method: runas
+  become_flags: logon_type=new_credentials logon_flags=netcredentials_only
+  win_service:
+    name: XenSvc
+    start_mode: auto
+    state: started

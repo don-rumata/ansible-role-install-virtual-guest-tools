@@ -32,27 +32,5 @@
 # Win7 only. https://askubuntu.com/a/1355273/457538
 virtual_guest_tools_virtio_win_win7_amd64_msi_url: https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.173-4/virtio-win-gt-x64.msi
 
-# https://ovirt.org/documentation/virtual_machine_management_guide/#Installing_the_Guest_Agents_and_Drivers_on_Windows
-# https://help.eset.com/eea/7/ru-RU/installation_command_line.html
-- name: Install VirtIO guest utils 4 Windows
-  when:
-    - ansible_os_family == 'Windows'
-    - ansible_system_vendor == 'QEMU'
-  become: yes
-  become_method: runas
-  become_flags: logon_type=new_credentials logon_flags=netcredentials_only
-  win_package:
-    path: '{{ virtual_guest_tools_virtio_win_url_fact }}'
-    # product_id: Virtio-win-driver-installer
-    creates_service: BalloonService
-    state: present
-    wait: true
-    arguments:
-      # NOT work :(
-      # - ADDEXCLUDE=FE_spice_Agent,FE_RHEV_Agent
-      # - /qn ADDLOCAL=FE_balloon_driver,FE_network_driver,FE_pvpanic_driver,FE_qemufwcfg_driver,FE_qemupciserial_driver,FE_qxl_driver,FE_spice_driver,FE_viorng_driver,FE_vioscsi_driver,FE_vioserial_driver,FE_viostor_driver
-      - /S
-  register: virtio_win_install_status
-
 # https://xenappblog.com/2018/download-and-install-latest-citrix-xenserver-tools/
 # https://pvupdates.vmd.citrix.com/updates.latest.tsv
