@@ -1,4 +1,30 @@
 ---
+- name: Get latest package name for Xen guest utils 4 Debian from Ubuntu repo
+  when:
+    - ansible_distribution == 'Debian'
+  # become: yes
+  vars:
+    ubuntu_mirror: mirrors.kernel.org/ubuntu
+  shell:
+    rsync --no-motd rsync://{{ ubuntu_mirror }}/pool/main/x/xe-guest-utilities/
+    | awk '{ $1=$2=$3=$4=""; print substr($0,5); }'
+    | grep -E deb$
+    | sort --version-sort
+    | grep amd64
+    | tail -1
+  register: xen_for_debian_package_name
+  changed_when: false
+
+- name: Install Xen guest utils 4 Debian only
+  when:
+    - ansible_distribution == 'Debian'
+  become: yes
+  vars:
+    ubuntu_mirror: mirrors.kernel.org/ubuntu
+  apt:
+    deb: '{{ http_or_https }}://{{ ubuntu_mirror }}/pool/main/x/xe-guest-utilities/{{ xen_for_debian_package_name.stdout }}'
+    state: present
+
 - name: Install Xen guest utils 4 Debian\Ubuntu
   when:
     - ansible_os_family == 'Debian'
