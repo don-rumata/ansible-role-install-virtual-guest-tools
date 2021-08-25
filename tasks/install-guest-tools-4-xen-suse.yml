@@ -1,0 +1,46 @@
+---
+- name: Get latest EPEL version 4 openSUSE (No, you didn't misread)
+  when:
+    - ansible_os_family == 'Suse'
+  vars:
+    epel_rsync_mirror: dl.fedoraproject.org/fedora-epel
+  shell:
+    rsync --no-motd rsync://{{ epel_rsync_mirror }}/
+    | awk '{ $1=$2=$3=$4=""; print substr($0,5); }'
+    | grep -E -v -i [a-z]
+    | sort --version-sort
+    | tail -1
+  register: epel_latast_version
+  changed_when: false
+
+- name: Get latest package name for Xen guest utils 4 openSUSE from EPEL repo
+  when:
+    - ansible_os_family == 'Suse'
+  # become: yes
+  vars:
+    epel_rsync_mirror: dl.fedoraproject.org/fedora-epel
+  shell:
+    rsync --no-motd rsync://{{ epel_rsync_mirror }}/{{ epel_latast_version.stdout }}/Everything/x86_64/Packages/x/
+    | awk '{ $1=$2=$3=$4=""; print substr($0,5); }'
+    | grep xe-guest-utilities-latest
+    | sort --version-sort
+    | tail -1
+  register: xen_for_opensuse_package_name
+  changed_when: false
+
+- name: Install Xen guest utils 4 openSUSE
+  when:
+    - ansible_os_family == 'Suse'
+  become: yes
+  vars:
+    epel_http_mirror: dl.fedoraproject.org/pub/epel
+  zypper:
+    name:
+      # - xen-tools-domU
+      - '{{ http_or_https }}://{{ epel_http_mirror }}/{{ epel_latast_version.stdout }}/Everything/x86_64/Packages/x/{{ xen_for_opensuse_package_name.stdout }}'
+    disable_gpg_check: yes
+    state: present
+
+# - name: Plug 4 Xen\openSUSE environment
+#   debug:
+#     msg: "Bad news, everyone! xe-guest-utilities unavailable 4 openSUSE :-("

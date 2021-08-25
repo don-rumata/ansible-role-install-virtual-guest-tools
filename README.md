@@ -30,12 +30,11 @@ Install guest tools for VitualBox, QEMU\KVM, Xen, VMware, Parallels in Linux and
     - name: opensuse
       vesrion:
         - 15.3
-        # TODO
-        # - tumbleweed
+        - tumbleweed
     - name: Windows
       version:
-        - 2008x64 (7 64bit)
-        - 2008x86 (7 32bit)
+        # TODO
+        # - 2008x64 (7 64bit)
         - 2019 (10 64bit)
 ```
 
@@ -165,6 +164,12 @@ Install guest tools from **local** web\smb server:
 **KVM**: Proxmox v6.4-13
 
 **Xen**: XCP-ng v8.2
+
+## Workarounds (dirty hacks)
+
+Debian `xe-guest-utilities` will be installed from `ubuntu/pool/main`.
+
+openSUSE `xe-guest-utilities` will be installed from latest `EPEL` repo.
 
 ## License
 

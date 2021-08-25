@@ -29,13 +29,13 @@ galaxy_info:
     - name: opensuse
       vesrion:
         - 15.3
-        # TODO
-        # - tumbleweed
+        - tumbleweed
     # https://galaxy.ansible.com/api/v1/platforms/?name__icontains=Windows
     - name: Windows
       version:
-        - 2008x64
-        - 2012R2
+        # TODO
+        # - 2008x64
+        # - 2012R2
         - 2019
 
   galaxy_tags:

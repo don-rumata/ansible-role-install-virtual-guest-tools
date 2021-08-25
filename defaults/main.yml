@@ -44,8 +44,3 @@ virtual_guest_tools_xen_win_tsv_path_to_save: /tmp/xen.updates.latest.tsv
 # Value for custom location
 # virtual_guest_tools_win_management_agent_url: http://10.10.10.10/soft/citrix/management-agent/managementagentx64.msi
 # virtual_guest_tools_win_management_agent_url: \\10.10.10.10\soft\citrix\management-agent\managementagentx64.msi
-
-#--- Repo section ---#
-# If you *NOT* use apt-cacher-ng or other caching proxy - select "https".
-http_or_https: http
-# http_or_https: https
