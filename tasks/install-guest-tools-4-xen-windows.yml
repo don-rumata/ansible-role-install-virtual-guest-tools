@@ -21,7 +21,7 @@
 - name: Set facts from pvupdates.tsv.json
   set_fact:
     citrix_xen_management_agent_url_fact:
-      "{{ virtual_guest_tools_win_management_agent_url
+      "{{ virtual_guest_tools_xen_win_management_agent_url
       | default(xen_updates_latest_tsv
       | json_query(query_citrix_management_agent_url)) }}"
     citrix_xen_management_agent_version_fact:

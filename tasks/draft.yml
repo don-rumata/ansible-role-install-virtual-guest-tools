@@ -34,3 +34,6 @@ virtual_guest_tools_virtio_win_win7_amd64_msi_url: https://fedorapeople.org/grou
 
 # https://xenappblog.com/2018/download-and-install-latest-citrix-xenserver-tools/
 # https://pvupdates.vmd.citrix.com/updates.latest.tsv
+
+# TODO. Посмотреть тот ли это самый сертификат, который я храню в этой роли.
+# https://fedorapeople.org/groups/virt/unattended/drivers/postinst/spice-guest-tools/0.141/
