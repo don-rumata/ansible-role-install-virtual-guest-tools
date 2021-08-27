@@ -173,6 +173,17 @@ Debian `xe-guest-utilities` will be installed from `ubuntu/pool/main`.
 
 openSUSE `xe-guest-utilities` will be installed from latest `EPEL` repo.
 
+## Known issue
+
+### `hv-fcopy-daemon.service` not started.
+
+On Hyper-V host:
+
+```powershell
+Enable-VMIntegrationService 'Guest Service Interface' -VMName $MY_VM_NAME
+```
+[src](https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1614618/comments/6)
+
 ## License
 
 Apache License, Version 2.0

@@ -2,7 +2,7 @@
 # https://docs.microsoft.com/ru-ru/virtualization/hyper-v-on-windows/reference/integration-services
 # https://docs.microsoft.com/ru-ru/windows-server/virtualization/hyper-v/manage/manage-hyper-v-integration-services
 
-# $VMName = 'ubuntu2004'
+# $VMName = 'buben2004'
 # Get-VM -VMName $VMName | select Name, State, Status
 # Get-VMIntegrationService -VMName $VMName
 
@@ -15,17 +15,17 @@
   when:
     - ansible_os_family == 'Debian'
   become: yes
-  lineinfile:
+  blockinfile:
     path: /etc/initramfs-tools/modules
-    line: "{{ item }}"
+    block: |
+      # https://stackoverflow.com/a/67481445
+      hid_hyperv
+      hv_netvsc
+      hv_utils
+      hv_storvc
+      hv_vmbus
     state: present
     backup: yes
-  with_items:
-    - hid_hyperv
-    - hv_netvsc
-    - hv_utils
-    - hv_storvc
-    - hv_vmbus
   register: initramfs_modules_for_hyper_v
 
 # https://reposcope.com/package/hyperv-daemons
@@ -57,4 +57,9 @@
   become: yes
   command: update-initramfs -u
 
-# TODO. Add reboot after update-initramfs.
+- name: Reboot after update initramfs 4 Debian\Ubuntu
+  when:
+    - ansible_os_family == 'Debian'
+    - initramfs_modules_for_hyper_v.changed
+  become: yes
+  reboot:
