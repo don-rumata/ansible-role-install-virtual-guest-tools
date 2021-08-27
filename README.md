@@ -165,6 +165,8 @@ Install guest tools from **local** web\smb server:
 
 **Xen**: XCP-ng v8.2
 
+**Hyper-V**: Windows server 2019 (ru_windows_server_2019_updated_april_2021_x64_dvd_479f8ca4.iso)
+
 ## Workarounds (dirty hacks)
 
 Debian `xe-guest-utilities` will be installed from `ubuntu/pool/main`.

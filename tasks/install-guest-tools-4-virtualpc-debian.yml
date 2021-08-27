@@ -1,0 +1,60 @@
+---
+# https://docs.microsoft.com/ru-ru/virtualization/hyper-v-on-windows/reference/integration-services
+# https://docs.microsoft.com/ru-ru/windows-server/virtualization/hyper-v/manage/manage-hyper-v-integration-services
+
+# $VMName = 'ubuntu2004'
+# Get-VM -VMName $VMName | select Name, State, Status
+# Get-VMIntegrationService -VMName $VMName
+
+# https://docs.microsoft.com/ru-ru/windows-server/virtualization/hyper-v/supported-debian-virtual-machines-on-hyper-v
+# https://docs.microsoft.com/ru-ru/windows-server/virtualization/hyper-v/supported-ubuntu-virtual-machines-on-hyper-v
+
+# https://stackoverflow.com/a/67481445
+# https://lothiancaleysweb.co.uk/hyper-v-linux-integration-services-lis-for-ubuntu-18-04
+- name: Add module list in initramfs 4 Hyper-V guest utils 4 Debian\Ubuntu
+  when:
+    - ansible_os_family == 'Debian'
+  become: yes
+  lineinfile:
+    path: /etc/initramfs-tools/modules
+    line: "{{ item }}"
+    state: present
+    backup: yes
+  with_items:
+    - hid_hyperv
+    - hv_netvsc
+    - hv_utils
+    - hv_storvc
+    - hv_vmbus
+  register: initramfs_modules_for_hyper_v
+
+# https://reposcope.com/package/hyperv-daemons
+- name: Install Hyper-V guest utils 4 Debian
+  when:
+    - ansible_distribution == 'Debian'
+  become: yes
+  package:
+    name:
+      - hyperv-daemons
+    state: present
+
+# https://gist.github.com/deoren/4d87ff5ddc831a22be433607341e5441
+- name: Install Hyper-V guest utils 4 Ubuntu
+  when:
+    - ansible_distribution == 'Ubuntu'
+  become: yes
+  package:
+    name:
+      - linux-cloud-tools-virtual
+      - linux-image-virtual
+      - linux-tools-virtual
+    state: present
+
+- name: Update initramfs 4 Debian\Ubuntu
+  when:
+    - ansible_os_family == 'Debian'
+    - initramfs_modules_for_hyper_v.changed
+  become: yes
+  command: update-initramfs -u
+
+# TODO. Add reboot after update-initramfs.
