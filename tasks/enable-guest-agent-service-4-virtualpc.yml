@@ -21,11 +21,15 @@
     - hv-kvp-daemon.service
     - hv-vss-daemon.service
 
-# - name: Enable Hyper-V guest agent 4 openSUSE
-#   when:
-#     - ansible_os_family == 'Suse'
-#   become: yes
-#   service:
-#     name: qemu-ga@virtio\x2dports-org.qemu.guest_agent.0.service
-#     enabled: yes
-#     state: started
+- name: Enable Hyper-V guest agent 4 openSUSE
+  when:
+    - ansible_os_family == 'Suse'
+  become: yes
+  service:
+    name: "{{ item }}"
+    enabled: yes
+    state: started
+  with_items:
+    - hv_fcopy_daemon.service
+    - hv_kvp_daemon.service
+    - hv_vss_daemon.service

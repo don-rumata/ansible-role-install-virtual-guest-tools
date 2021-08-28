@@ -1,0 +1,9 @@
+---
+- name: Install Hyper-V guest utils 4 openSUSE
+  when:
+    - ansible_os_family == 'Suse'
+  become: yes
+  package:
+    name:
+      - hyper-v
+    state: present
