@@ -3,7 +3,7 @@
 focal,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:construction:,:heavy_check_mark:,:construction:
 bionic,:heavy_check_mark:,:heavy_check_mark:,:construction:,:construction:,:construction:,:construction:
 **Debian**,,,,,,
-buster,:heavy_check_mark:,:heavy_check_mark:,:construction:,:construction:,:heavy_check_mark:,:construction:
+buster,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:construction:,:heavy_check_mark:,:construction:
 bullseye,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:construction:,:heavy_check_mark:,:construction:
 **EL (CentOS)**,,,,,,
 8,:heavy_check_mark:,:heavy_check_mark:,:construction:,:construction:,:heavy_check_mark:,:construction:

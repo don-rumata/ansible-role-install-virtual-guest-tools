@@ -11,9 +11,24 @@
     - ansible_os_family == 'Debian'
       or
       ansible_os_family == 'RedHat'
+    - ansible_distribution_release != 'buster'
   become: yes
   service:
     name: "{{ item }}"
+    enabled: yes
+    state: started
+  with_items:
+    - hv-fcopy-daemon.service
+    - hv-kvp-daemon.service
+    - hv-vss-daemon.service
+
+- name: Enable Hyper-V guest agent 4 Debian buster
+  when:
+    - ansible_os_family == 'Debian'
+    - ansible_distribution_release == 'buster'
+  become: yes
+  service:
+    name: "hyperv-daemons.{{ item }}"
     enabled: yes
     state: started
   with_items:
