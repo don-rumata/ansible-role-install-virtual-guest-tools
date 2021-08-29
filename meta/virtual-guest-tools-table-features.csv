@@ -1,7 +1,7 @@
 .,VirtualBox,QEMU\KVM,Hyper-V,VMware,Xen,Parallels
 **Ubuntu**,,,,,,
 focal,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:construction:,:heavy_check_mark:,:construction:
-bionic,:heavy_check_mark:,:heavy_check_mark:,:construction:,:construction:,:construction:,:construction:
+bionic,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:construction:,:construction:,:construction:
 **Debian**,,,,,,
 buster,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:construction:,:heavy_check_mark:,:construction:
 bullseye,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:construction:,:heavy_check_mark:,:construction:
