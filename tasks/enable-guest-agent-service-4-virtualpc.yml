@@ -6,11 +6,9 @@
 # Enable-VMIntegrationService 'Guest Service Interface' -VMName $MY_VM_NAME
 # Get-VMIntegrationService 'Guest Service Interface' -VMName $MY_VM_NAME
 
-- name: Enable Hyper-V guest agent 4 Debian\Ubuntu\Fedora\RHEL
+- name: Enable Hyper-V guest agent 4 Debian\Ubuntu
   when:
     - ansible_os_family == 'Debian'
-      or
-      ansible_os_family == 'RedHat'
     - ansible_distribution_release != 'buster'
   become: yes
   service:
@@ -35,6 +33,19 @@
     - hv-fcopy-daemon.service
     - hv-kvp-daemon.service
     - hv-vss-daemon.service
+
+- name: Enable Hyper-V guest agent 4 CentOS\RHEL\Fedora
+  when:
+      ansible_os_family == 'RedHat'
+  become: yes
+  service:
+    name: "{{ item }}"
+    enabled: yes
+    state: started
+  with_items:
+    - hypervfcopyd.service
+    - hypervkvpd.service
+    - hypervvssd.service
 
 - name: Enable Hyper-V guest agent 4 openSUSE
   when:

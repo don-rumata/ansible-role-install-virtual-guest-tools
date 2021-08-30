@@ -1,10 +1,16 @@
 ---
 # https://reposcope.com/package/hyperv-daemons
+# dnf search Hyper-V
 - name: Install Hyper-V guest utils 4 CentOS\RHEL\Fedora
   when:
-    - ansible_distribution == 'RedHat'
+    - ansible_os_family == 'RedHat'
   become: yes
   package:
     name:
       - hyperv-daemons
+      - hyperv-daemons-license
+      - hyperv-tools
+      - hypervfcopyd
+      - hypervkvpd
+      - hypervvssd
     state: present
