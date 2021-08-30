@@ -58,3 +58,17 @@
   win_command: dism /Online /Add-Package /NoRestart /PackagePath:{{ download_hyper_v_guest_cab_result.dest }}
   register: install_kb
   failed_when: install_kb.rc != 3010
+
+# https://docs.microsoft.com/ru-ru/windows-server/virtualization/hyper-v/manage/manage-hyper-v-integration-services#use-windows-powershell-to-start-or-stop-an-integration-service-within-a-windows-guest
+# Get-Service -Name vm* | Select Name
+- name: Get all guest Hyper-V services 4 Windows
+  when:
+    - ansible_os_family == 'Windows'
+  become: yes
+  become_method: runas
+  become_flags: logon_type=new_credentials logon_flags=netcredentials_only
+  win_shell: Get-Service -Name vm* | Select -ExpandProperty Name
+  args:
+    executable: powershell
+  register: hyper_v_available_guest_serivces
+  changed_when: false
