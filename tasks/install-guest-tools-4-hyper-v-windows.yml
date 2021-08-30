@@ -1,13 +1,15 @@
 ---
+# https://github.com/MicrosoftDocs/Virtualization-Documentation/blob/master/virtualization/hyper-v-on-windows/reference/integration-services.md
 # https://support.microsoft.com/en-us/topic/hyper-v-integration-components-update-for-windows-virtual-machines-8a74ffad-576e-d5a0-5a2f-d6fb2594f990
 # https://www.microsoft.com/en-us/download/details.aspx?id=51901
 # https://gcits.com/knowledge-base/manually-install-integration-tools-hyper-v-virtual-machine/
 # win7-64 https://download.microsoft.com/download/0/C/A/0CADD11C-CE3A-4BF6-8321-165438638676/windows6.x-hypervintegrationservices-x64.cab
-# Add-WindowsPackage -Online -PackagePath $integrationServicesCabPath
+# winserver2012r2 https://download.microsoft.com/download/5/A/C/5AC3E8C3-CB7C-413E-A518-8D0C56042102/windows6.2-hypervintegrationservices-x64.cab
 
 - name: Get installed Windows updates
   when:
     - ansible_os_family == 'Windows'
+    - ansible_distribution_major_version == '6'
   become: yes
   become_method: runas
   become_flags: logon_type=new_credentials logon_flags=netcredentials_only
@@ -20,6 +22,7 @@
 - name: Find KB3063109 in installed KB
   when:
     - ansible_os_family == 'Windows'
+    - ansible_distribution_major_version == '6'
   set_fact:
     installed_kb_for_guest_hyper_v_fact:
       "{{ win_kb_installed.stdout
@@ -27,34 +30,31 @@
       | json_query(query_installed_kb_for_guest_hyper_v) }}"
   vars:
     query_installed_kb_for_guest_hyper_v:
-      # "[?contains(@, 'KB3063109') == `true`]"
-      "[?contains(@, 'KB4516065')] | [0]"
-      # "[?contains(@, '4516065') == `true`] | [0]"
+      "[?contains(@, 'KB3063109')] | [0]"
+      # 4 debug. This kb was installed in my win7.
+      # "[?contains(@, 'KB4516065')] | [0]"
 
-- pause:
-
-- name: Start Windows update service
+- name: Download KB3063109
   when:
     - ansible_os_family == 'Windows'
+    - ansible_distribution_major_version == '6'
+    - installed_kb_for_guest_hyper_v_fact == ""
   become: yes
   become_method: runas
   become_flags: logon_type=new_credentials logon_flags=netcredentials_only
-  win_service:
-    name: "{{ item }}"
-    start_mode: auto
-    state: started
-  with_items:
-    - wuauserv
-    # - UsoSvc
+  win_get_url:
+    url: '{{ virtual_guest_tools_hyper_v_win_cab_url }}'
+    dest: '{{ ansible_env.TMP }}'
+  register: download_hyper_v_guest_cab_result
 
-- name: Install only particular updates based on the KB numbers
+- name: Install KB3063109
   when:
     - ansible_os_family == 'Windows'
+    - ansible_distribution_major_version == '6'
+    - installed_kb_for_guest_hyper_v_fact == ""
   become: yes
   become_method: runas
   become_flags: logon_type=new_credentials logon_flags=netcredentials_only
-  win_updates:
-    # category_name:
-    # - SecurityUpdates
-    whitelist:
-    - KB3063109
+  win_command: dism /Online /Add-Package /NoRestart /PackagePath:{{ download_hyper_v_guest_cab_result.dest }}
+  register: install_kb
+  failed_when: install_kb.rc != 3010

@@ -28,12 +28,6 @@ virtualbox_url_version: '{{ virtualbox_url_prefix }}/{{ virtualbox_edition | upp
 
 virtualbox_url_path_to_files: '{{ virtualbox_url_prefix }}/{{ virtualbox_available_version_fact }}'
 
-#--- Repo settings ---#
-
-# If you *NOT* use apt-cacher-ng or other caching proxy - select "https".
-http_or_https: http
-# http_or_https: https
-
 #--- Xen settings ---#
 
 # Windows only.
@@ -44,3 +38,17 @@ virtual_guest_tools_xen_win_tsv_path_to_save: /tmp/xen.updates.latest.tsv
 # Value for custom location
 # virtual_guest_tools_xen_win_management_agent_url: http://10.10.10.10/soft/citrix/management-agent/managementagentx64.msi
 # virtual_guest_tools_xen_win_management_agent_url: \\10.10.10.10\soft\citrix\management-agent\managementagentx64.msi
+
+#--- Hyper-V settings ---#
+
+# Windows only.
+
+# win7
+virtual_guest_tools_hyper_v_win_cab_url: https://download.microsoft.com/download/0/C/A/0CADD11C-CE3A-4BF6-8321-165438638676/windows6.x-hypervintegrationservices-x64.cab
+# virtual_guest_tools_hyper_v_win_cab_url: https://download.microsoft.com/download/5/A/C/5AC3E8C3-CB7C-413E-A518-8D0C56042102/windows6.2-hypervintegrationservices-x64.cab
+
+#--- Repo settings ---#
+
+# If you *NOT* use apt-cacher-ng or other caching proxy - select "https".
+http_or_https: http
+# http_or_https: https

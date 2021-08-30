@@ -48,3 +48,22 @@
     - hv_fcopy_daemon.service
     - hv_kvp_daemon.service
     - hv_vss_daemon.service
+
+# https://docs.microsoft.com/ru-ru/windows-server/virtualization/hyper-v/manage/manage-hyper-v-integration-services#use-windows-powershell-to-start-or-stop-an-integration-service-within-a-windows-guest
+# Get-Service -Name vm* | Select Name
+- name: Enable Hyper-V guest agent 4 Windows
+  when:
+    - ansible_os_family == 'Windows'
+  become: yes
+  become_method: runas
+  become_flags: logon_type=new_credentials logon_flags=netcredentials_only
+  win_service:
+    name: "{{ item }}"
+    start_mode: auto
+    state: started
+  with_items:
+    - vmicheartbeat
+    - vmickvpexchange
+    - vmicshutdown
+    - vmictimesync
+    - vmicvss
