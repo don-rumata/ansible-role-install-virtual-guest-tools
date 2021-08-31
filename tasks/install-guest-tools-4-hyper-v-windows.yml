@@ -37,18 +37,15 @@
 - name: Get url 4 current windows version
   when:
     - ansible_os_family == 'Windows'
+    - ansible_distribution_major_version == '6'
     - installed_kb_for_guest_hyper_v_fact == ""
   block:
     - set_fact:
         virtual_guest_tools_hyper_v_win_cab_url_fact: "{{ virtual_guest_tools_hyper_v_win7_cab_url }}"
-      when:
-        - ansible_distribution_major_version == '6'
-        - ansible_os_product_type == 'workstation'
+      when: ansible_os_product_type == 'workstation'
     - set_fact:
         virtual_guest_tools_hyper_v_win_cab_url_fact: "{{ virtual_guest_tools_hyper_v_win2012_cab_url }}"
-      when:
-        - ansible_distribution_major_version == '6'
-        - ansible_os_product_type == 'server'
+      when: ansible_os_product_type == 'server'
 
 - name: Download KB3063109
   when:
