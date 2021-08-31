@@ -34,6 +34,22 @@
       # 4 debug. This kb was installed in my win7.
       # "[?contains(@, 'KB4516065')] | [0]"
 
+- name: Get url 4 current windows version
+  when:
+    - ansible_os_family == 'Windows'
+    - installed_kb_for_guest_hyper_v_fact == ""
+  block:
+    - set_fact:
+        virtual_guest_tools_hyper_v_win_cab_url_fact: "{{ virtual_guest_tools_hyper_v_win7_cab_url }}"
+      when:
+        - ansible_distribution_major_version == '6'
+        - ansible_os_product_type == 'workstation'
+    - set_fact:
+        virtual_guest_tools_hyper_v_win_cab_url_fact: "{{ virtual_guest_tools_hyper_v_win2012_cab_url }}"
+      when:
+        - ansible_distribution_major_version == '6'
+        - ansible_os_product_type == 'server'
+
 - name: Download KB3063109
   when:
     - ansible_os_family == 'Windows'
@@ -43,7 +59,7 @@
   become_method: runas
   become_flags: logon_type=new_credentials logon_flags=netcredentials_only
   win_get_url:
-    url: '{{ virtual_guest_tools_hyper_v_win_cab_url }}'
+    url: '{{ virtual_guest_tools_hyper_v_win_cab_url_fact }}'
     dest: '{{ ansible_env.TMP }}'
   register: download_hyper_v_guest_cab_result
 
