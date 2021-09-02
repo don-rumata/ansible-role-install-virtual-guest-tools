@@ -12,7 +12,8 @@ galaxy_info:
     - name: Fedora
       versions:
         - 33
-        - 34
+        # TODO
+        # - 34
     - name: Ubuntu
       versions:
         - bionic
@@ -33,9 +34,8 @@ galaxy_info:
     # https://galaxy.ansible.com/api/v1/platforms/?name__icontains=Windows
     - name: Windows
       version:
-        # TODO
-        # - 2008x64
-        # - 2012R2
+        - 2008x64
+        - 2012R2
         - 2019
 
   galaxy_tags:

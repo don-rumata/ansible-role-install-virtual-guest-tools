@@ -13,7 +13,8 @@ Install guest tools for VitualBox, QEMU\KVM, Xen, VMware, Parallels in Linux and
     - name: Fedora
       versions:
         - 33
-        - 34
+        # TODO.
+        # - 34
     - name: Ubuntu
       versions:
         - bionic
@@ -33,8 +34,7 @@ Install guest tools for VitualBox, QEMU\KVM, Xen, VMware, Parallels in Linux and
         - tumbleweed
     - name: Windows
       version:
-        # TODO
-        # - 2008x64 (7 64bit)
+        - 2008x64 (7 64bit)
         - 2019 (10 64bit)
 ```
 
@@ -43,6 +43,28 @@ Install guest tools for VitualBox, QEMU\KVM, Xen, VMware, Parallels in Linux and
 - :heavy_check_mark: - work, tested, ok.
 - :construction: - TODO. Work in progress.
 - :x: - not work. Don't try.
+
+|.              |VirtualBox        |QEMU\KVM          |Hyper-V           |VMware        |Xen               |Parallels     |
+|---------------|------------------|------------------|------------------|--------------|------------------|--------------|
+|**Ubuntu**     |                  |                  |                  |              |                  |              |
+|focal          |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:|:heavy_check_mark:|:construction:|
+|bionic         |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:|:construction:    |:construction:|
+|**Debian**     |                  |                  |                  |              |                  |              |
+|buster         |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:|:heavy_check_mark:|:construction:|
+|bullseye       |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:|:heavy_check_mark:|:construction:|
+|**EL (CentOS)**|                  |                  |                  |              |                  |              |
+|8              |:heavy_check_mark:|:heavy_check_mark:|:construction:    |:construction:|:heavy_check_mark:|:construction:|
+|**openSUSE**   |                  |                  |                  |              |                  |              |
+|tumbleweed     |:heavy_check_mark:|:construction:    |:heavy_check_mark:|:construction:|:heavy_check_mark:|:construction:|
+|leap           |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:|:heavy_check_mark:|:construction:|
+|**Fedora**     |                  |                  |                  |              |                  |              |
+|33             |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:|:construction:    |:construction:|
+|34             |:construction:    |:construction:    |:construction:    |:construction:|:construction:    |:construction:|
+|**Windows**    |                  |                  |                  |              |                  |              |
+|7              |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:|:construction:    |:construction:|
+|10             |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:|:heavy_check_mark:|:construction:|
+|2012r2         |:construction:    |:heavy_check_mark:|:heavy_check_mark:|:construction:|:construction:    |:construction:|
+|2019           |:construction:    |:heavy_check_mark:|:heavy_check_mark:|:construction:|:heavy_check_mark:|:construction:|
 
 ## Requirements
 
