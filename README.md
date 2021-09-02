@@ -204,6 +204,7 @@ On Hyper-V host:
 ```powershell
 Enable-VMIntegrationService 'Guest Service Interface' -VMName $MY_VM_NAME
 ```
+
 [src](https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1614618/comments/6)
 
 ## License
@@ -224,6 +225,6 @@ Apache License, Version 2.0
 [ansible-galaxy-image]: https://img.shields.io/badge/ansible_galaxy-don__rumata.ansible__role__install__virtual-guest-tools-blue.svg
 [ansible-galaxy-url]: https://galaxy.ansible.com/don_rumata/ansible_role_install_virtual-guest-tools
 
-[ansible-galaxy-quality-image]: https://img.shields.io/ansible/quality/55766
+[ansible-galaxy-quality-image]: https://img.shields.io/ansible/quality/56147
 
 [ansible-galaxy-release-image]: https://img.shields.io/github/v/release/don-rumata/ansible-role-install-virtual-guest-tools.svg?include_prereleases
