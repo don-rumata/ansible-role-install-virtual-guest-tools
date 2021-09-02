@@ -44,31 +44,31 @@ Install guest tools for VitualBox, QEMU\KVM, Xen, VMware, Parallels in Linux and
 - :construction: - TODO. Work in progress.
 - :x: - not work. Don't try.
 
-|.              |VirtualBox        |QEMU\KVM          |Hyper-V           |VMware        |Xen               |Parallels     |
-|---------------|------------------|------------------|------------------|--------------|------------------|--------------|
-|**Ubuntu**     |                  |                  |                  |              |                  |              |
-|focal          |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:|:heavy_check_mark:|:construction:|
-|bionic         |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:|:construction:    |:construction:|
-|**Debian**     |                  |                  |                  |              |                  |              |
-|buster         |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:|:heavy_check_mark:|:construction:|
-|bullseye       |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:|:heavy_check_mark:|:construction:|
-|**EL (CentOS)**|                  |                  |                  |              |                  |              |
-|8              |:heavy_check_mark:|:heavy_check_mark:|:construction:    |:construction:|:heavy_check_mark:|:construction:|
-|**openSUSE**   |                  |                  |                  |              |                  |              |
-|tumbleweed     |:heavy_check_mark:|:construction:    |:heavy_check_mark:|:construction:|:heavy_check_mark:|:construction:|
-|leap           |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:|:heavy_check_mark:|:construction:|
-|**Fedora**     |                  |                  |                  |              |                  |              |
-|33             |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:|:construction:    |:construction:|
-|34             |:construction:    |:construction:    |:construction:    |:construction:|:construction:    |:construction:|
-|**Windows**    |                  |                  |                  |              |                  |              |
-|7              |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:|:construction:    |:construction:|
-|10             |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:|:heavy_check_mark:|:construction:|
-|2012r2         |:construction:    |:heavy_check_mark:|:heavy_check_mark:|:construction:|:construction:    |:construction:|
-|2019           |:construction:    |:heavy_check_mark:|:heavy_check_mark:|:construction:|:heavy_check_mark:|:construction:|
+|.              |VirtualBox        |QEMU\KVM          |Hyper-V           |VMware        |Xen               |
+|---------------|------------------|------------------|------------------|--------------|------------------|
+|**Ubuntu**     |                  |                  |                  |              |                  |
+|focal          |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:|:heavy_check_mark:|
+|bionic         |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:|:construction:    |
+|**Debian**     |                  |                  |                  |              |                  |
+|buster         |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:|:heavy_check_mark:|
+|bullseye       |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:|:heavy_check_mark:|
+|**EL (CentOS)**|                  |                  |                  |              |                  |
+|8              |:heavy_check_mark:|:heavy_check_mark:|:construction:    |:construction:|:heavy_check_mark:|
+|**openSUSE**   |                  |                  |                  |              |                  |
+|tumbleweed     |:heavy_check_mark:|:construction:    |:heavy_check_mark:|:construction:|:heavy_check_mark:|
+|leap           |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:|:heavy_check_mark:|
+|**Fedora**     |                  |                  |                  |              |                  |
+|33             |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:|:construction:    |
+|34             |:construction:    |:construction:    |:construction:    |:construction:|:construction:    |
+|**Windows**    |                  |                  |                  |              |                  |
+|7              |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:|:construction:    |
+|10             |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:|:heavy_check_mark:|
+|2012r2         |:construction:    |:heavy_check_mark:|:heavy_check_mark:|:construction:|:construction:    |
+|2019           |:construction:    |:heavy_check_mark:|:heavy_check_mark:|:construction:|:heavy_check_mark:|
 
 ## Requirements
 
-[min_ansible_version: 2.8](https://docs.ansible.com/ansible/latest/modules/flatpak_module.html)
+min_ansible_version: 2.8
 
 ## Role Variables
 
