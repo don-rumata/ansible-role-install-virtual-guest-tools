@@ -222,8 +222,8 @@ Apache License, Version 2.0
 [license-image]: https://img.shields.io/github/license/don-rumata/ansible-role-install-virtual-guest-tools.svg
 [license-url]: https://opensource.org/licenses/Apache-2.0
 
-[ansible-galaxy-image]: https://img.shields.io/badge/ansible_galaxy-don__rumata.ansible__role__install__virtual-guest-tools-blue.svg
-[ansible-galaxy-url]: https://galaxy.ansible.com/don_rumata/ansible_role_install_virtual-guest-tools
+[ansible-galaxy-image]: https://img.shields.io/badge/ansible_galaxy-don__rumata.ansible__role__install__virtual__guest__tools-blue.svg
+[ansible-galaxy-url]: https://galaxy.ansible.com/don_rumata/ansible_role_install_virtual_guest_tools
 
 [ansible-galaxy-quality-image]: https://img.shields.io/ansible/quality/56147
 
