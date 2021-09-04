@@ -151,7 +151,7 @@ Install guest tools for any [supported](#Work-on) plaforms:
   serial:
     - "100%"
   roles:
-    - ansible-role-install-virtual-guest-tools
+    - don_rumata.ansible_role_install_virtual_guest_tools
   tasks:
 ```
 
@@ -168,7 +168,7 @@ Install guest tools from **local** web\smb server:
     serial:
       - "100%"
     roles:
-      - role: ansible-role-install-virtual-guest-tools
+      - role: don_rumata.ansible_role_install_virtual_guest_tools
         virtual_guest_tools_virtio_win_amd64_msi_url: \\10.10.10.10\soft\virtio-win\latest-virtio\virtio-win-gt-x64.msi
         virtual_guest_tools_qemu_ga_win_amd64_msi_url: \\10.10.10.10\soft\virtio-win\latest-qemu-ga\qemu-ga-x86_64.msi
         virtual_guest_tools_virtio_win_win7_amd64_msi_url: http://10.10.10.10/soft/spice/spice-guest-tools-latest.exe
@@ -177,6 +177,34 @@ Install guest tools from **local** web\smb server:
           - http://10.10.10.10/drivers/other/virtio-win/qxldod/w10/amd64/qxldod.cat
           - http://10.10.10.10/drivers/other/virtio-win/viostor/w10/amd64/viostor.cat
     tasks:
+```
+
+`virtual-server-inventory.ini`:
+
+```ini
+[my-vbox-sandboxs]
+10.10.1.10
+10.10.1.20
+10.10.1.30
+
+[my-kvm-vms]
+10.10.2.10
+10.10.2.20
+10.10.3.30
+
+[my-xen-tests]
+10.10.3.10
+10.10.3.20
+10.10.3.30
+
+[my-hyper-v-dumpster]
+10.10.4.10
+10.10.4.20
+10.10.4.30
+```
+
+```bash
+ansible-playbook -i ./virtual-server-inventory.ini ./install-virtual-guest-tools.yml
 ```
 
 ## Development and testing environments
@@ -197,7 +225,7 @@ openSUSE `xe-guest-utilities` will be installed from latest `EPEL` repo.
 
 ## Known issue
 
-### `hv-fcopy-daemon.service` not started.
+### `hv-fcopy-daemon.service` not started
 
 On Hyper-V host:
 
