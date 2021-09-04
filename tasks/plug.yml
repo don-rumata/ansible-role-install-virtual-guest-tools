@@ -1,0 +1,3 @@
+- name: Plug 4 {{ ansible_virtualization_type }} environment
+  debug:
+    msg: "Good news, everyone! Where we are, we don't need guest tools."
