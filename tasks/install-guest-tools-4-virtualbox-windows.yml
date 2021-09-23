@@ -1,22 +1,15 @@
 ---
-- name: Set fact about virtualbox guest iso content root path
+- name: Set fact about virtualbox guest iso content root path 4 Windows 7
   when:
     - ansible_os_family == 'Windows'
+    - ansible_distribution_major_version == '6'
     - ansible_virtualization_type == 'virtualbox'
       or
       ansible_virtualization_type == 'VirtualBox'
     - not (win_virtualbox_service_info.exists)
-  block:
-    # 4 win10
-    - set_fact:
-        virtualbox_guest_additions_iso_content_root_path_fact:
-          '{{ disk_image_out.mount_path }}'
-      when: ansible_distribution_major_version == '10'
-    # 4 win7
-    - set_fact:
-        virtualbox_guest_additions_iso_content_root_path_fact:
-          '{{ ansible_env.TMP }}\vboxwindowsadditions'
-      when: ansible_distribution_major_version == '6'
+  set_fact:
+    virtualbox_guest_additions_iso_content_root_path_fact:
+      '{{ ansible_env.TMP }}\vboxwindowsadditions'
 
 - name: Download {{ virtualbox_guest_additions_iso_basename_fact }} 4 Windows
   when:
@@ -47,6 +40,18 @@
     image_path: '{{ vboxguestadditions_full_path_to_save }}'
     state: present
   register: disk_image_out
+
+- name: Set fact about virtualbox guest iso content root path 4 Windows 10
+  when:
+    - ansible_os_family == 'Windows'
+    - ansible_distribution_major_version == '10'
+    - ansible_virtualization_type == 'virtualbox'
+      or
+      ansible_virtualization_type == 'VirtualBox'
+    - not (win_virtualbox_service_info.exists)
+  set_fact:
+    virtualbox_guest_additions_iso_content_root_path_fact:
+      '{{ disk_image_out.mount_path }}'
 
 - name: Exract iso over 7-zip 4 Windows 7
   when:
