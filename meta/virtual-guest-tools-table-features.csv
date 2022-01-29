@@ -1,6 +1,6 @@
 .,VirtualBox,QEMU\KVM,Hyper-V,VMware,Xen
 **Ubuntu**,,,,,
-focal,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:construction:,:heavy_check_mark:
+focal,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:
 bionic,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:construction:,:construction:
 **Debian**,,,,,
 buster,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:construction:,:heavy_check_mark:
@@ -12,7 +12,7 @@ tumbleweed,:heavy_check_mark:,:construction:,:heavy_check_mark:,:construction:,:
 leap,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:construction:,:heavy_check_mark:
 **Fedora**,,,,,
 33,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:construction:,:construction:
-34,:construction:,:construction:,:construction:,:construction:,:construction:
+34,:thinking:,:thinking:,:thinking:,:thinking:,:thinking:
 **Windows**,,,,,
 7,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:construction:,:construction:
 10,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:construction:,:heavy_check_mark:
