@@ -68,10 +68,18 @@
       - linux-headers-{{ ansible_kernel }}
       - virtualbox-guest-dkms
       - virtualbox-guest-utils
-      # TODO. https://ru.stackoverflow.com/q/1113754
-      # - virtualbox-guest-x11
     state: present
   register: virtualbox_guest_installed_status
+
+- name: Install VirtualBox guest gui utils 4 Debian\Ubuntu
+  when:
+    - ansible_os_family == 'Debian'
+    - ansible_facts.services["display-manager.service"].state == 'active'
+  become: yes
+  package:
+    name:
+      - virtualbox-guest-x11
+    state: present
 
 - name: Once reboot, because it FUCKIN DIRTY HACK!!!
   when:
