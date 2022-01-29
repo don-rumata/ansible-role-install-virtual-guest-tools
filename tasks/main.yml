@@ -1,6 +1,6 @@
 ---
 - include_tasks: update-cache.yml
-  when: ansible_virtualization_type == 'docker'
+  # when: ansible_virtualization_type == 'docker'
 
 - include_tasks: install-dependencies.yml
   when:
