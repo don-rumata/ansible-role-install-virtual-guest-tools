@@ -10,13 +10,13 @@
     enabled: yes
     state: started
 
-# # Why does the service have such a crooked name?
-# # https://youtu.be/gqqm9CMKrA4
-# - name: Enable QEMU guest agent 4 openSUSE
-#   when:
-#     - ansible_os_family == 'Suse'
-#   become: yes
-#   service:
-#     name: qemu-ga@virtio\x2dports-org.qemu.guest_agent.0.service
-#     enabled: yes
-#     state: started
+# Why does the service have such a crooked name?
+# https://youtu.be/gqqm9CMKrA4
+- name: Enable VMware guest agent 4 openSUSE
+  when:
+    - ansible_os_family == 'Suse'
+  become: yes
+  service:
+    name: vmtoolsd.service
+    enabled: yes
+    state: started

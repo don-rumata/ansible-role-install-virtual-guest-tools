@@ -1,15 +1,15 @@
 .,VirtualBox,QEMU\KVM,Hyper-V,VMware,Xen
 **Ubuntu**,,,,,
 focal,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:
-bionic,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:construction:,:construction:
+bionic,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:thinking:,:construction:
 **Debian**,,,,,
 buster,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:construction:,:heavy_check_mark:
 bullseye,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:construction:,:heavy_check_mark:
 **EL (CentOS)**,,,,,
 8,:heavy_check_mark:,:heavy_check_mark:,:construction:,:construction:,:heavy_check_mark:
 **openSUSE**,,,,,
-tumbleweed,:heavy_check_mark:,:construction:,:heavy_check_mark:,:construction:,:heavy_check_mark:
-leap,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:construction:,:heavy_check_mark:
+tumbleweed,:heavy_check_mark:,:construction:,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:
+leap,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:
 **Fedora**,,,,,
 33,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:construction:,:construction:
 34,:thinking:,:thinking:,:thinking:,:thinking:,:thinking:

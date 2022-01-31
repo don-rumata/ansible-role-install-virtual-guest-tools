@@ -1,0 +1,22 @@
+---
+- name: Install VMware guest utils 4 openSUSE
+  when:
+    - ansible_os_family == 'Suse'
+  become: yes
+  package:
+    name:
+      - open-vm-tools
+    state: present
+
+# https://ru.stackoverflow.com/a/1376272/191416
+# https://stackoverflow.com/a/65027270
+- name: Install VMware guest gui utils 4 openSUSE
+  when:
+    - ansible_os_family == 'Suse'
+    - ansible_facts.services["display-manager.service"] is defined
+    - ansible_facts.services["display-manager.service"].state == 'active'
+  become: yes
+  package:
+    name:
+      - open-vm-tools-desktop
+    state: present
