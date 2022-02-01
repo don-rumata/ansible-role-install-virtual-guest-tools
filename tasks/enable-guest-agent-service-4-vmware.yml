@@ -1,9 +1,7 @@
 ---
-- name: Enable VMware guest agent 4 Debian\Ubuntu\Fedora\RHEL
+- name: Enable VMware guest agent 4 Debian\Ubuntu
   when:
     - ansible_os_family == 'Debian'
-      or
-      ansible_os_family == 'RedHat'
   become: yes
   service:
     name: open-vm-tools.service
@@ -12,9 +10,11 @@
 
 # Why does the service have such a crooked name?
 # https://youtu.be/gqqm9CMKrA4
-- name: Enable VMware guest agent 4 openSUSE
+- name: Enable VMware guest agent 4 openSUSE\Fedora\RHEL
   when:
     - ansible_os_family == 'Suse'
+      or
+      ansible_os_family == 'RedHat'
   become: yes
   service:
     name: vmtoolsd.service

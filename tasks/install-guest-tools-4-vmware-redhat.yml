@@ -1,0 +1,21 @@
+---
+- name: Install VMware guest utils 4 CentOS\RHEL\Fedora
+  when:
+    - ansible_os_family == 'RedHat'
+  become: yes
+  package:
+    name:
+      - open-vm-tools
+    state: present
+
+# https://ru.stackoverflow.com/a/1376272/191416
+- name: Install VMware guest gui utils 4 CentOS\RHEL\Fedora
+  when:
+    - ansible_os_family == 'RedHat'
+    - ansible_facts.services["display-manager.service"] is defined
+    - ansible_facts.services["display-manager.service"].state == 'active'
+  become: yes
+  package:
+    name:
+      - open-vm-tools-desktop
+    state: present
