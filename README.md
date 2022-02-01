@@ -13,8 +13,8 @@ Install guest tools for VirtualBox, QEMU\KVM, Xen, VMware in Linux and Windows.
     - name: Fedora
       versions:
         - 33
-        # TODO.
-        # - 34
+        - 34
+        - 35
     - name: Ubuntu
       versions:
         - bionic
@@ -51,18 +51,19 @@ Install guest tools for VirtualBox, QEMU\KVM, Xen, VMware in Linux and Windows.
 |focal          |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|
 |bionic         |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:thinking:        |:construction:    |
 |**Debian**     |                  |                  |                  |                  |                  |
-|buster         |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:    |:heavy_check_mark:|
-|bullseye       |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:    |:heavy_check_mark:|
+|buster         |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:thinking:        |:heavy_check_mark:|
+|bullseye       |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|
 |**EL (CentOS)**|                  |                  |                  |                  |                  |
-|8              |:heavy_check_mark:|:heavy_check_mark:|:construction:    |:construction:    |:heavy_check_mark:|
+|8              |:heavy_check_mark:|:heavy_check_mark:|:construction:    |:thinking:        |:heavy_check_mark:|
 |**openSUSE**   |                  |                  |                  |                  |                  |
 |tumbleweed     |:heavy_check_mark:|:construction:    |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|
 |leap           |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|
 |**Fedora**     |                  |                  |                  |                  |                  |
-|33             |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:    |:construction:    |
+|33             |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:thinking:        |:construction:    |
 |34             |:thinking:        |:thinking:        |:thinking:        |:thinking:        |:thinking:        |
+|35             |:thinking:        |:thinking:        |:thinking:        |:heavy_check_mark:|:thinking:        |
 |**Windows**    |                  |                  |                  |                  |                  |
-|7              |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:thinking:        |:construction:    |
+|7              |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:    |
 |10             |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|
 |2012r2         |:construction:    |:heavy_check_mark:|:heavy_check_mark:|:thinking:        |:construction:    |
 |2019           |:construction:    |:heavy_check_mark:|:heavy_check_mark:|:thinking:        |:heavy_check_mark:|
@@ -77,12 +78,12 @@ min_ansible_version: 2.8
 ---
 #--- QEMU\KVM settings ---#
 
-# Windows only
+# Windows only.
 virtual_guest_tools_virtio_win_amd64_msi_url: https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-virtio/virtio-win-gt-x64.msi
 virtual_guest_tools_qemu_ga_win_amd64_msi_url: https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-qemu-ga/qemu-ga-x86_64.msi
 virtual_guest_tools_spice_webdavd_win_amd64_msi_url: https://www.spice-space.org/download/windows/spice-webdavd/spice-webdavd-x64-latest.msi
 
-# Win7 only. https://askubuntu.com/a/1355273/457538
+# win7 only. https://askubuntu.com/a/1355273/457538
 virtual_guest_tools_virtio_win_win7_amd64_msi_url: https://www.spice-space.org/download/windows/spice-guest-tools/spice-guest-tools-latest.exe
 
 virtual_guest_tools_virtio_certs_urls:
@@ -103,6 +104,44 @@ virtualbox_url_prefix: https://download.virtualbox.org/virtualbox
 virtualbox_url_version: '{{ virtualbox_url_prefix }}/{{ virtualbox_edition | upper }}.TXT'
 
 virtualbox_url_path_to_files: '{{ virtualbox_url_prefix }}/{{ virtualbox_available_version_fact }}'
+
+virtualbox_url_path_to_iso: https://download.virtualbox.org/virtualbox/{{ virtualbox_available_version_fact }}/VBoxGuestAdditions_{{ virtualbox_available_version_fact }}.iso
+# virtualbox_url_path_to_iso: http://10.10.10.10/soft/virtualbox/latest-stable/vboxguestadditions_latest.iso
+
+#--- Xen settings ---#
+
+# Windows only.
+# https://xenappblog.com/2018/download-and-install-latest-citrix-xenserver-tools/
+virtual_guest_tools_xen_win_tsv_url: https://pvupdates.vmd.citrix.com/updates.latest.tsv
+virtual_guest_tools_xen_win_tsv_path_to_save: /tmp/xen.updates.latest.tsv
+
+# Value for custom location
+# virtual_guest_tools_xen_win_management_agent_url: http://10.10.10.10/soft/citrix/management-agent/managementagentx64.msi
+# virtual_guest_tools_xen_win_management_agent_url: \\10.10.10.10\soft\citrix\management-agent\managementagentx64.msi
+
+#--- Hyper-V settings ---#
+
+# Windows only.
+# win7
+virtual_guest_tools_hyper_v_win7_cab_url: https://download.microsoft.com/download/0/C/A/0CADD11C-CE3A-4BF6-8321-165438638676/windows6.x-hypervintegrationservices-x64.cab
+virtual_guest_tools_hyper_v_win2012_cab_url: https://download.microsoft.com/download/5/A/C/5AC3E8C3-CB7C-413E-A518-8D0C56042102/windows6.2-hypervintegrationservices-x64.cab
+
+#--- VMware settings ---#
+
+virtual_guest_tools_vmware_versions_url: https://packages.vmware.com/tools/versions
+
+# If the value is not defined, the last supported version from url will be selected.
+# vmware_tools_version:
+
+# If the value is not defined, the last supported build from url will be selected.
+# vmware_tools_build_number:
+
+virtual_guest_tools_vmware_win_url: https://packages.vmware.com/tools/releases/{{ vmware_tools_version_fact }}/windows/x64/VMware-tools-{{ vmware_tools_version_fact }}-{{ vmware_tools_build_number_fact }}-x86_64.exe
+# virtual_guest_tools_vmware_win_url: http://10.10.10.10/soft/vmware/vmware-tools-latest-amd64.exe
+# virtual_guest_tools_vmware_win_url: \\10.10.10.10\soft\vmware\vmware-tools-latest-amd64.exe
+
+virtual_guest_tools_vmware_win_reboot_after_install: true
+# virtual_guest_tools_vmware_win_reboot_after_install: false
 
 #--- Repo settings ---#
 
@@ -177,6 +216,12 @@ Install guest tools from **local** web\smb server:
         virtual_guest_tools_virtio_certs_urls:
           - http://10.10.10.10/drivers/other/virtio-win/qxldod/w10/amd64/qxldod.cat
           - http://10.10.10.10/drivers/other/virtio-win/viostor/w10/amd64/viostor.cat
+        virtual_guest_tools_xen_win_management_agent_url: \\10.10.10.10\soft\citrix\management-agent\managementagentx64.msi
+
+        virtualbox_url_path_to_iso: http://10.10.10.10/soft/virtualbox/latest-stable/vboxguestadditions_latest.iso
+
+        virtual_guest_tools_vmware_versions_url: http://10.10.10.10/soft/vmware/tools/versions
+        virtual_guest_tools_vmware_win_url: http://10.10.10.10/soft/vmware/tools/vmware-tools-latest-amd64.exe
     tasks:
 ```
 
@@ -202,6 +247,11 @@ Install guest tools from **local** web\smb server:
 10.10.4.10
 10.10.4.20
 10.10.4.30
+
+[my-vmware-zoo]
+10.10.5.10
+10.10.5.20
+10.10.5.30
 ```
 
 ```bash
@@ -249,7 +299,7 @@ Apache License, Version 2.0
 ## TODO
 
 - Add tests.
-- Add var 4 vbox iso
+- ~~Add var 4 vbox iso~~
 
 [license-image]: https://img.shields.io/github/license/don-rumata/ansible-role-install-virtual-guest-tools.svg
 [license-url]: https://opensource.org/licenses/Apache-2.0

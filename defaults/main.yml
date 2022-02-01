@@ -28,6 +28,9 @@ virtualbox_url_version: '{{ virtualbox_url_prefix }}/{{ virtualbox_edition | upp
 
 virtualbox_url_path_to_files: '{{ virtualbox_url_prefix }}/{{ virtualbox_available_version_fact }}'
 
+virtualbox_url_path_to_iso: https://download.virtualbox.org/virtualbox/{{ virtualbox_available_version_fact }}/VBoxGuestAdditions_{{ virtualbox_available_version_fact }}.iso
+# virtualbox_url_path_to_iso: http://10.10.10.10/soft/virtualbox/latest-stable/vboxguestadditions_latest.iso
+
 #--- Xen settings ---#
 
 # Windows only.

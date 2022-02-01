@@ -3,18 +3,19 @@
 focal,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:
 bionic,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:thinking:,:construction:
 **Debian**,,,,,
-buster,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:construction:,:heavy_check_mark:
-bullseye,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:construction:,:heavy_check_mark:
+buster,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:thinking:,:heavy_check_mark:
+bullseye,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:
 **EL (CentOS)**,,,,,
-8,:heavy_check_mark:,:heavy_check_mark:,:construction:,:construction:,:heavy_check_mark:
+8,:heavy_check_mark:,:heavy_check_mark:,:construction:,:thinking:,:heavy_check_mark:
 **openSUSE**,,,,,
 tumbleweed,:heavy_check_mark:,:construction:,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:
 leap,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:
 **Fedora**,,,,,
-33,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:construction:,:construction:
+33,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:thinking:,:construction:
 34,:thinking:,:thinking:,:thinking:,:thinking:,:thinking:
+35,:thinking:,:thinking:,:thinking:,:heavy_check_mark:,:thinking:
 **Windows**,,,,,
-7,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:thinking:,:construction:
+7,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:construction:
 10,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:
 2012r2,:construction:,:heavy_check_mark:,:heavy_check_mark:,:thinking:,:construction:
 2019,:construction:,:heavy_check_mark:,:heavy_check_mark:,:thinking:,:heavy_check_mark:
