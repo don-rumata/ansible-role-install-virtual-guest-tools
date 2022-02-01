@@ -12,8 +12,8 @@ galaxy_info:
     - name: Fedora
       versions:
         - 33
-        # TODO
-        # - 34
+        - 34
+        - 35
     - name: Ubuntu
       versions:
         - bionic
@@ -53,6 +53,7 @@ galaxy_info:
     - qemu
     - virtualbox
     - spice
+    - virtio
     - guest
     - agent
     - guestagent
@@ -60,5 +61,6 @@ galaxy_info:
     - xcpng
     - citrix
     - xsenserver
+    - vmware
 
   dependencies: []
