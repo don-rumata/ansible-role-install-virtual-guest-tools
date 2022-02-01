@@ -43,28 +43,29 @@ Install guest tools for VirtualBox, QEMU\KVM, Xen, VMware in Linux and Windows.
 - :heavy_check_mark: - work, tested, ok.
 - :construction: - TODO. Work in progress.
 - :x: - not work. Don't try.
+- :thinking: - not tested, but it should work.
 
-|.              |VirtualBox        |QEMU\KVM          |Hyper-V           |VMware        |Xen               |
-|---------------|------------------|------------------|------------------|--------------|------------------|
-|**Ubuntu**     |                  |                  |                  |              |                  |
-|focal          |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:|:heavy_check_mark:|
-|bionic         |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:|:construction:    |
-|**Debian**     |                  |                  |                  |              |                  |
-|buster         |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:|:heavy_check_mark:|
-|bullseye       |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:|:heavy_check_mark:|
-|**EL (CentOS)**|                  |                  |                  |              |                  |
-|8              |:heavy_check_mark:|:heavy_check_mark:|:construction:    |:construction:|:heavy_check_mark:|
-|**openSUSE**   |                  |                  |                  |              |                  |
-|tumbleweed     |:heavy_check_mark:|:construction:    |:heavy_check_mark:|:construction:|:heavy_check_mark:|
-|leap           |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:|:heavy_check_mark:|
-|**Fedora**     |                  |                  |                  |              |                  |
-|33             |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:|:construction:    |
-|34             |:construction:    |:construction:    |:construction:    |:construction:|:construction:    |
-|**Windows**    |                  |                  |                  |              |                  |
-|7              |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:|:construction:    |
-|10             |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:|:heavy_check_mark:|
-|2012r2         |:construction:    |:heavy_check_mark:|:heavy_check_mark:|:construction:|:construction:    |
-|2019           |:construction:    |:heavy_check_mark:|:heavy_check_mark:|:construction:|:heavy_check_mark:|
+|.              |VirtualBox        |QEMU\KVM          |Hyper-V           |VMware            |Xen               |
+|---------------|------------------|------------------|------------------|------------------|------------------|
+|**Ubuntu**     |                  |                  |                  |                  |                  |
+|focal          |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|
+|bionic         |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:thinking:        |:construction:    |
+|**Debian**     |                  |                  |                  |                  |                  |
+|buster         |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:    |:heavy_check_mark:|
+|bullseye       |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:    |:heavy_check_mark:|
+|**EL (CentOS)**|                  |                  |                  |                  |                  |
+|8              |:heavy_check_mark:|:heavy_check_mark:|:construction:    |:construction:    |:heavy_check_mark:|
+|**openSUSE**   |                  |                  |                  |                  |                  |
+|tumbleweed     |:heavy_check_mark:|:construction:    |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|
+|leap           |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|
+|**Fedora**     |                  |                  |                  |                  |                  |
+|33             |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:construction:    |:construction:    |
+|34             |:thinking:        |:thinking:        |:thinking:        |:thinking:        |:thinking:        |
+|**Windows**    |                  |                  |                  |                  |                  |
+|7              |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:thinking:        |:construction:    |
+|10             |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|
+|2012r2         |:construction:    |:heavy_check_mark:|:heavy_check_mark:|:thinking:        |:construction:    |
+|2019           |:construction:    |:heavy_check_mark:|:heavy_check_mark:|:thinking:        |:heavy_check_mark:|
 
 ## Requirements
 
@@ -217,6 +218,8 @@ ansible-playbook -i ./virtual-server-inventory.ini ./install-virtual-guest-tools
 
 **Hyper-V**: Windows server 2019 (ru_windows_server_2019_updated_april_2021_x64_dvd_479f8ca4.iso)
 
+**VMware**: VMware-player-full-16.2.2-19200509.exe
+
 ## Workarounds (dirty hacks)
 
 Debian `xe-guest-utilities` will be installed from `ubuntu/pool/main`.
@@ -246,6 +249,7 @@ Apache License, Version 2.0
 ## TODO
 
 - Add tests.
+- Add var 4 vbox iso
 
 [license-image]: https://img.shields.io/github/license/don-rumata/ansible-role-install-virtual-guest-tools.svg
 [license-url]: https://opensource.org/licenses/Apache-2.0

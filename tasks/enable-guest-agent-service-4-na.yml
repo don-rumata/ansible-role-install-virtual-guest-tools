@@ -35,3 +35,12 @@
 #     name: spice-webdavd
 #     start_mode: auto
 #     state: started
+
+- name: Enable VMware tools service 4 Windows
+  when:
+    - ansible_os_family == 'Windows'
+    - ansible_system_vendor == 'VMware, Inc.'
+  win_service:
+    name: VMTools
+    start_mode: auto
+    state: started

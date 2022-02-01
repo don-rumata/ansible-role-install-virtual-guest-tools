@@ -46,6 +46,23 @@ virtual_guest_tools_xen_win_tsv_path_to_save: /tmp/xen.updates.latest.tsv
 virtual_guest_tools_hyper_v_win7_cab_url: https://download.microsoft.com/download/0/C/A/0CADD11C-CE3A-4BF6-8321-165438638676/windows6.x-hypervintegrationservices-x64.cab
 virtual_guest_tools_hyper_v_win2012_cab_url: https://download.microsoft.com/download/5/A/C/5AC3E8C3-CB7C-413E-A518-8D0C56042102/windows6.2-hypervintegrationservices-x64.cab
 
+#--- VMware settings ---#
+
+virtual_guest_tools_vmware_versions_url: https://packages.vmware.com/tools/versions
+
+# If the value is not defined, the last supported version from url will be selected.
+# vmware_tools_version:
+
+# If the value is not defined, the last supported build from url will be selected.
+# vmware_tools_build_number:
+
+virtual_guest_tools_vmware_win_url: https://packages.vmware.com/tools/releases/{{ vmware_tools_version_fact }}/windows/x64/VMware-tools-{{ vmware_tools_version_fact }}-{{ vmware_tools_build_number_fact }}-x86_64.exe
+# virtual_guest_tools_vmware_win_url: http://10.10.10.10/soft/vmware/vmware-tools-latest-amd64.exe
+# virtual_guest_tools_vmware_win_url: \\10.10.10.10\soft\vmware\vmware-tools-latest-amd64.exe
+
+virtual_guest_tools_vmware_win_reboot_after_install: true
+# virtual_guest_tools_vmware_win_reboot_after_install: false
+
 #--- Repo settings ---#
 
 # If you *NOT* use apt-cacher-ng or other caching proxy - select "https".

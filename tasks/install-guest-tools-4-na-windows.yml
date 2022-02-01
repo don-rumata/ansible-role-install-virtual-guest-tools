@@ -131,3 +131,92 @@
 #   become_method: runas
 #   become_flags: logon_type=new_credentials logon_flags=netcredentials_only
 #   win_reboot:
+
+####################################################################
+
+- name: Download csv-like file with guest utility versions 4 Windows
+  when:
+    - ansible_os_family == 'Windows'
+    - ansible_system_vendor == 'VMware, Inc.'
+  uri:
+    url: "{{ virtual_guest_tools_vmware_versions_url }}"
+    return_content: yes
+  register: vmware_csv_result
+  delegate_to: localhost
+
+# https://stackoverflow.com/a/1546244
+- name: Set common fact 4 VMware from url content
+  when:
+    - ansible_os_family == 'Windows'
+    - ansible_system_vendor == 'VMware, Inc.'
+  vars:
+    var_regex_replace_comments: (^[^#].*$)
+  set_fact:
+    vmware_csv_result_fact:
+      "{{ vmware_csv_result.content
+      | regex_findall(var_regex_replace_comments, multiline=True)
+      | replace('\\t', '')
+      | regex_replace(' +', ' ') }}"
+
+- name: Set the VMware version facts in detail
+  when:
+    - ansible_os_family == 'Windows'
+    - ansible_system_vendor == 'VMware, Inc.'
+  set_fact:
+    vmware_version_on_ngc_vi_client_fact:
+      "{{ vmware_csv_result_fact[0].split(' ')[0] }}"
+    vmware_esxi_server_version_fact:
+      "{{ vmware_csv_result_fact[0].split(' ')[1] }}"
+    vmware_esxi_server_build_number_fact:
+      "{{ vmware_csv_result_fact[0].split(' ')[2] }}"
+    vmware_tools_version_fact:
+      "{{ vmware_tools_version
+      | default(vmware_csv_result_fact[0].split(' ')[3]) }}"
+    vmware_tools_build_number_fact:
+      "{{ vmware_tools_build_number
+      | default(vmware_csv_result_fact[0].split(' ')[4]) }}"
+
+    # 4 debug
+    # "vmware_csv_result_fact": [
+    #     "11365 esx/6.7p06 18828794 11.3.5 18557794", 
+    # ]
+
+    # "ansible_facts": {
+    #     "vmware_esxi_server_build_number_fact": "18828794", 
+    #     "vmware_esxi_server_version_fact": "esx/6.7p06", 
+    #     "vmware_tools_build_number_fact": "18557794", 
+    #     "vmware_tools_version_fact": "11.3.5", 
+    #     "vmware_version_on_ngc_vi_client_fact": "11365"
+
+- name: Install VMware guest tools 4 Windows
+  when:
+    - ansible_os_family == 'Windows'
+    - ansible_system_vendor == 'VMware, Inc.'
+  become: yes
+  become_method: runas
+  become_flags: logon_type=new_credentials logon_flags=netcredentials_only
+  win_package:
+    path: '{{ virtual_guest_tools_vmware_win_url }}'
+    # product_id: VMware tools
+    # creates_path: '%ProgramFiles%\VMware\VMware Tools\vmtoolsd.exe'
+    # creates_version: "{{ vmware_tools_version_fact }} build-{{ vmware_tools_build_number_fact }}"
+    creates_service: VMTools
+    state: present
+    arguments:
+      # https://community.chocolatey.org/packages/vmware-tools#files
+      - /S /v /qn REBOOT=R ADDLOCAL=ALL
+  register: vmware_tools_install_result
+
+- name: Reboot after install VMware guest tools 4 Windows
+  when:
+    - ansible_os_family == 'Windows'
+    - ansible_system_vendor == 'VMware, Inc.'
+    - vmware_tools_install_result.reboot_required == virtual_guest_tools_vmware_win_reboot_after_install
+  become: yes
+  become_method: runas
+  become_flags: logon_type=new_credentials logon_flags=netcredentials_only
+  win_reboot:
+
+# 4 debug
+# - win_file_version:
+#     path: '%ProgramFiles%\VMware\VMware Tools\vmtoolsd.exe'
