@@ -20,6 +20,8 @@
 # https://www.vmware.com/support/ws5/doc/ws_install_silent.html
 # https://docs.vmware.com/en/VMware-Tools/11.3.0/com.vmware.vsphere.vmwaretools.doc/GUID-E45C572D-6448-410F-BFA2-F729F2CDA8AC.html
 
+# https://packages.vmware.com/tools/keys/VMWARE-PACKAGING-GPG-RSA-KEY.pub
+
 # https://packages.vmware.com/tools/releases/latest/windows/x64/VMware-tools-11.3.0-18090558-x86_64.exe
 # 11360       esx/0.0     		            11.3.0	    18090558
       # - name: parse html
