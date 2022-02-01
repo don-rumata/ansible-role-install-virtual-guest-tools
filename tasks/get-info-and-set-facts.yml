@@ -41,7 +41,7 @@
       ansible_virtualization_type == 'VirtualBox'
   set_fact:
     virtualbox_guest_additions_iso_url_fact:
-      '{{ virtualbox_url_path_to_files }}/VBoxGuestAdditions_{{ virtualbox_available_version_fact }}.iso'
+      '{{ virtualbox_url_path_to_iso }}'
   delegate_to: localhost
 
 - name: Set facts about virtualbox guest additions filename
