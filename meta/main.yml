@@ -47,8 +47,6 @@ galaxy_info:
     - fedora
     - opensuse
     - windows
-    - windows7
-    - windows10
     - kvm
     - qemu
     - virtualbox

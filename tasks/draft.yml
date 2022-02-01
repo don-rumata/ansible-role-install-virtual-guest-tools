@@ -1,10 +1,10 @@
 ---
-  - name: Install Virtual Guest Agents
-    hosts: all
-    strategy: free
-    serial:
-      - "100%"
-    tasks:
+  # - name: Install Virtual Guest Agents
+  #   hosts: all
+  #   strategy: free
+  #   serial:
+  #     - "100%"
+  #   tasks:
 
 # hyper-v ubuntu
 # https://gist.github.com/deoren/4d87ff5ddc831a22be433607341e5441
@@ -23,7 +23,6 @@
 # https://packages.vmware.com/tools/keys/VMWARE-PACKAGING-GPG-RSA-KEY.pub
 
 # https://packages.vmware.com/tools/releases/latest/windows/x64/VMware-tools-11.3.0-18090558-x86_64.exe
-# 11360       esx/0.0     		            11.3.0	    18090558
       # - name: parse html
       #   block:
       #     - uri:
@@ -38,7 +37,7 @@
       #         vmware_html_fact: "{{ vmware_html_fact[0] }}"
 
 # Win7 only. https://askubuntu.com/a/1355273/457538
-virtual_guest_tools_virtio_win_win7_amd64_msi_url: https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.173-4/virtio-win-gt-x64.msi
+# virtual_guest_tools_virtio_win_win7_amd64_msi_url: https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.173-4/virtio-win-gt-x64.msi
 
 # https://xenappblog.com/2018/download-and-install-latest-citrix-xenserver-tools/
 # https://pvupdates.vmd.citrix.com/updates.latest.tsv
