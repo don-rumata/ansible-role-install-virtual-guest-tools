@@ -17,6 +17,7 @@ Install guest tools for VirtualBox, QEMU\KVM, Xen, VMware in Linux and Windows.
         - 35
     - name: Ubuntu
       versions:
+        - jammy
         - bionic
         - focal
     - name: Debian
@@ -48,6 +49,7 @@ Install guest tools for VirtualBox, QEMU\KVM, Xen, VMware in Linux and Windows.
 |.              |VirtualBox        |QEMU\KVM          |Hyper-V           |VMware            |Xen               |
 |---------------|------------------|------------------|------------------|------------------|------------------|
 |**Ubuntu**     |                  |                  |                  |                  |                  |
+|jammy          |:heavy_check_mark:|:heavy_check_mark:|:thinking:        |:thinking:        |:thinking:        |
 |focal          |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|
 |bionic         |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:thinking:        |:construction:    |
 |**Debian**     |                  |                  |                  |                  |                  |

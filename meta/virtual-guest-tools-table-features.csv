@@ -1,5 +1,6 @@
 .,VirtualBox,QEMU\KVM,Hyper-V,VMware,Xen
 **Ubuntu**,,,,,
+jammy,:heavy_check_mark:,:heavy_check_mark:,:thinking:,:thinking:,:thinking:
 focal,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:
 bionic,:heavy_check_mark:,:heavy_check_mark:,:heavy_check_mark:,:thinking:,:construction:
 **Debian**,,,,,

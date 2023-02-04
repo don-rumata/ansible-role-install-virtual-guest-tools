@@ -63,17 +63,23 @@
   when:
     - ansible_os_family == 'Debian'
   become: yes
-  package:
-    name:
-      - linux-headers-{{ ansible_kernel }}
-      - virtualbox-guest-dkms
-      - virtualbox-guest-utils
-    state: present
-  register: virtualbox_guest_installed_status
+  block:
+    - package:
+        name:
+          - linux-headers-{{ ansible_kernel }}
+          - virtualbox-guest-utils
+        state: present
+      register: virtualbox_guest_installed_status
+    - package:
+        name:
+          - virtualbox-guest-dkms
+        state: present
+      when: ansible_distribution_release != 'jammy'
 
 - name: Install VirtualBox guest gui utils 4 Debian\Ubuntu
   when:
     - ansible_os_family == 'Debian'
+    - ansible_facts.services["display-manager.service"] is defined
     - ansible_facts.services["display-manager.service"].state == 'active'
   become: yes
   package:
