@@ -28,7 +28,7 @@
       #     - uri:
       #         url: https://packages.vmware.com/tools/releases/latest/windows/x64/
       #         method: GET
-      #         return_content: yes
+      #         return_content: true
       #       register: vmware_html
       #     - set_fact:
       #         vmware_html_fact: "{{ vmware_html.content | regex_findall('.*exe') | replace('<IMG SRC=\"/icons/generic.gif\" ALT=\"[FILE]\"> <A HREF=\"', '') }}"

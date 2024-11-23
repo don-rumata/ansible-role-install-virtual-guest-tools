@@ -7,7 +7,7 @@
       ansible_facts.services['vboxadd-service.service'].state != 'running'
   vars:
     vboxguestadditions_iso_local_path: /tmp/vboxguestadditions.iso
-  become: yes
+  become: true
   get_url:
     url: '{{ virtualbox_guest_additions_iso_url_fact }}'
     dest: '{{ vboxguestadditions_iso_local_path }}'
@@ -31,7 +31,7 @@
       ansible_facts.services['vboxadd-service.service'].state != 'running'
   vars:
     vboxguestadditions_iso_local_path: /tmp/vboxguestadditions.iso
-  become: yes
+  become: true
   mount:
     path: '{{ tmp_dir_for_mount_vboxguestadditions.path }}'
     src: '{{ vboxguestadditions_iso_local_path }}'
@@ -45,7 +45,7 @@
     - ansible_facts.services['vboxadd-service.service'] is not defined
       or
       ansible_facts.services['vboxadd-service.service'].state != 'running'
-  become: yes
+  become: true
   shell: ./VBoxLinuxAdditions.run --nox11
   args:
     chdir: '{{ tmp_dir_for_mount_vboxguestadditions.path }}'
@@ -58,7 +58,7 @@
       ansible_facts.services['vboxadd-service.service'].state != 'running'
   vars:
     vboxguestadditions_iso_local_path: /tmp/vboxguestadditions.iso
-  become: yes
+  become: true
   mount:
     path: '{{ tmp_dir_for_mount_vboxguestadditions.path }}'
     src: '{{ vboxguestadditions_iso_local_path }}'

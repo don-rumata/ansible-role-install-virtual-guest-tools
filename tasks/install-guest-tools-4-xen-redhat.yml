@@ -4,7 +4,7 @@
     - ansible_os_family == 'RedHat'
     - ansible_pkg_mgr == 'dnf'
     - ansible_distribution != 'Fedora'
-  become: yes
+  become: true
   package:
     name:
       - epel-release
@@ -13,7 +13,7 @@
 - name: Install Xen guest utils 4 CentOS\RHEL\Fedora
   when:
     - ansible_os_family == 'RedHat'
-  become: yes
+  become: true
   package:
     name:
       - xe-guest-utilities-latest

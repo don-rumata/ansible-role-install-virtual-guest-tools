@@ -8,7 +8,7 @@
     - ansible_facts.services['vboxadd-service.service'] is not defined
       or
       ansible_facts.services['vboxadd-service.service'].state != 'running'
-  become: yes
+  become: true
   package:
     name:
       - epel-release
@@ -20,7 +20,7 @@
     - ansible_facts.services['vboxadd-service.service'] is not defined
       or
       ansible_facts.services['vboxadd-service.service'].state != 'running'
-  become: yes
+  become: true
   package:
     name:
       - gcc
@@ -35,7 +35,7 @@
 - name: Install virtualbox-guest-additions 4 Fedora
   when:
     - ansible_distribution == "Fedora"
-  become: yes
+  become: true
   package:
     name:
       - virtualbox-guest-additions

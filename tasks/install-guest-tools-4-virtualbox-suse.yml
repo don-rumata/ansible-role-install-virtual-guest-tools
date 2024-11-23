@@ -3,7 +3,7 @@
 - name: Install VirtualBox guest utils 4 openSUSE
   when:
     - ansible_system == 'Linux'
-  become: yes
+  become: true
   package:
     name:
       - virtualbox-guest-tools

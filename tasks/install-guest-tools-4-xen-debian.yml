@@ -2,7 +2,7 @@
 - name: Get latest package name for Xen guest utils 4 Debian from Ubuntu repo
   when:
     - ansible_distribution == 'Debian'
-  # become: yes
+  # become: true
   vars:
     ubuntu_mirror: mirrors.kernel.org/ubuntu
   shell:
@@ -18,7 +18,7 @@
 - name: Install Xen guest utils 4 Debian only
   when:
     - ansible_distribution == 'Debian'
-  become: yes
+  become: true
   vars:
     ubuntu_mirror: mirrors.kernel.org/ubuntu
   apt:
@@ -28,7 +28,7 @@
 - name: Install Xen guest utils 4 Debian\Ubuntu
   when:
     - ansible_os_family == 'Debian'
-  become: yes
+  become: true
   package:
     name:
       - xe-guest-utilities

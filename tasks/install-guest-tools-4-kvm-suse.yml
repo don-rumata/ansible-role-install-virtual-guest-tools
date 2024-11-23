@@ -2,7 +2,7 @@
 - name: Install KVM guest utils 4 openSUSE
   when:
     - ansible_os_family == 'Suse'
-  become: yes
+  become: true
   package:
     name:
       - qemu-guest-agent

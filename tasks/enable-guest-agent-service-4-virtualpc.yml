@@ -10,10 +10,10 @@
   when:
     - ansible_os_family == 'Debian'
     - ansible_distribution_release != 'buster'
-  become: yes
+  become: true
   service:
     name: "{{ item }}"
-    enabled: yes
+    enabled: true
     state: started
   with_items:
     - hv-fcopy-daemon.service
@@ -24,10 +24,10 @@
   when:
     - ansible_os_family == 'Debian'
     - ansible_distribution_release == 'buster'
-  become: yes
+  become: true
   service:
     name: "hyperv-daemons.{{ item }}"
-    enabled: yes
+    enabled: true
     state: started
   with_items:
     - hv-fcopy-daemon.service
@@ -37,10 +37,10 @@
 - name: Enable Hyper-V guest agent 4 CentOS\RHEL\Fedora
   when:
       ansible_os_family == 'RedHat'
-  become: yes
+  become: true
   service:
     name: "{{ item }}"
-    enabled: yes
+    enabled: true
     state: started
   with_items:
     - hypervfcopyd.service
@@ -50,10 +50,10 @@
 - name: Enable Hyper-V guest agent 4 openSUSE
   when:
     - ansible_os_family == 'Suse'
-  become: yes
+  become: true
   service:
     name: "{{ item }}"
-    enabled: yes
+    enabled: true
     state: started
   with_items:
     - hv_fcopy_daemon.service
@@ -63,7 +63,7 @@
 - name: Enable Hyper-V guest agent 4 Windows
   when:
     - ansible_os_family == 'Windows'
-  become: yes
+  become: true
   become_method: runas
   become_flags: logon_type=new_credentials logon_flags=netcredentials_only
   win_service:

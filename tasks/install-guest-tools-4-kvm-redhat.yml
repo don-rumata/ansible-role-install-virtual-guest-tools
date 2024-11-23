@@ -2,7 +2,7 @@
 - name: Install KVM guest utils 4 CentOS\RHEL\Fedora
   when:
     - ansible_os_family == 'RedHat'
-  become: yes
+  become: true
   package:
     name:
       - qemu-guest-agent

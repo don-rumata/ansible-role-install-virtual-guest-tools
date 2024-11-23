@@ -4,7 +4,7 @@
 - name: Install Hyper-V guest utils 4 CentOS\RHEL\Fedora
   when:
     - ansible_os_family == 'RedHat'
-  become: yes
+  become: true
   package:
     name:
       - hyperv-daemons

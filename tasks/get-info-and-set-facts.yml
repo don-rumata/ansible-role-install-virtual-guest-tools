@@ -19,7 +19,7 @@
   uri:
     url: '{{ virtualbox_url_version }}'
     method: GET
-    return_content: yes
+    return_content: true
   register: virtualbox_available_version
   delegate_to: localhost
 

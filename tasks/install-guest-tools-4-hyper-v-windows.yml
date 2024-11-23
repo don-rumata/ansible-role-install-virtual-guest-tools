@@ -10,7 +10,7 @@
   when:
     - ansible_os_family == 'Windows'
     - ansible_distribution_major_version == '6'
-  become: yes
+  become: true
   become_method: runas
   become_flags: logon_type=new_credentials logon_flags=netcredentials_only
   win_shell: Get-HotFix | select -ExpandProperty HotFixID | ConvertTo-Json -Compress
@@ -52,7 +52,7 @@
     - ansible_os_family == 'Windows'
     - ansible_distribution_major_version == '6'
     - installed_kb_for_guest_hyper_v_fact == ""
-  become: yes
+  become: true
   become_method: runas
   become_flags: logon_type=new_credentials logon_flags=netcredentials_only
   win_get_url:
@@ -65,7 +65,7 @@
     - ansible_os_family == 'Windows'
     - ansible_distribution_major_version == '6'
     - installed_kb_for_guest_hyper_v_fact == ""
-  become: yes
+  become: true
   become_method: runas
   become_flags: logon_type=new_credentials logon_flags=netcredentials_only
   win_command: dism /Online /Add-Package /NoRestart /PackagePath:{{ download_hyper_v_guest_cab_result.dest }}
@@ -77,7 +77,7 @@
 - name: Get all guest Hyper-V services 4 Windows
   when:
     - ansible_os_family == 'Windows'
-  become: yes
+  become: true
   become_method: runas
   become_flags: logon_type=new_credentials logon_flags=netcredentials_only
   win_shell: Get-Service -Name vm* | Select -ExpandProperty Name

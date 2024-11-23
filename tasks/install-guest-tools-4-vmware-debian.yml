@@ -2,7 +2,7 @@
 - name: Install VMware guest utils 4 Debian\Ubuntu
   when:
     - ansible_os_family == 'Debian'
-  become: yes
+  become: true
   package:
     name:
       - open-vm-tools
@@ -15,7 +15,7 @@
     - ansible_os_family == 'Debian'
     - ansible_facts.services["display-manager.service"] is defined
     - ansible_facts.services["display-manager.service"].state == 'active'
-  become: yes
+  become: true
   package:
     name:
       - open-vm-tools-desktop

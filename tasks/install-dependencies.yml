@@ -2,7 +2,7 @@
 - name: Install python3-pip 4 Linux
   when:
     - ansible_system == 'Linux'
-  become: yes
+  become: true
   package:
     name:
       - python3-pip
@@ -17,7 +17,7 @@
     # https://stackoverflow.com/a/47091066/5430535
     # https://github.com/ansible/ansible/issues/32532#issuecomment-341641007
     ansible_python_interpreter: /usr/bin/python2.7
-  become: yes
+  become: true
   package:
     name:
       - python-setuptools
@@ -31,7 +31,7 @@
     - ansible_system == 'Linux'
     # - ansible_os_family == 'RedHat'
     - ansible_os_family in ['RedHat', 'Suse']
-  become: yes
+  become: true
   pip:
     name:
       - jmespath
@@ -45,7 +45,9 @@
 - name: Install jmespath 4 Linux
   when:
     - ansible_system == 'Linux'
-  # become: yes
+    # 4 Ubuntu jammy and focal
+    - "ansible_distribution_version is version('22.04', '<')"
+  # become: true
   pip:
     name:
       - jmespath
@@ -59,7 +61,7 @@
     - ansible_os_family == 'Debian'
     - ansible_pkg_mgr == 'apt'
     - ansible_architecture == 'x86_64'
-  become: yes
+  become: true
   apt:
     name: gnupg-agent
     state: present
@@ -68,7 +70,7 @@
   when:
     - ansible_system == 'Linux'
     - ansible_virtualization_type == 'docker'
-  become: yes
+  become: true
   file:
     path: /usr/share/man/man1
     state: directory
@@ -82,7 +84,7 @@
   #   # https://stackoverflow.com/a/47091066/5430535
   #   # https://github.com/ansible/ansible/issues/32532#issuecomment-341641007
   #   ansible_python_interpreter: /usr/bin/python2.7
-  become: yes
+  become: true
   package:
     name:
       - redhat-lsb-core
@@ -94,7 +96,7 @@
     - ansible_system == 'Linux'
     - ansible_os_family == 'Suse'
     - ansible_pkg_mgr == 'zypper'
-  become: yes
+  become: true
   package:
     name:
       - lsb-release
@@ -108,6 +110,7 @@
       or (python3_setuptools_installed_status is changed)
       or (redhat_lsb_core_installed_status is changed)
       or (jmespath_centos_8_installed_status is changed)
+      or (jmespath_linux_installed_status is defined)
       or (jmespath_linux_installed_status is changed)
       or (opensuse_lsb_release_installed_status is changed)
   block:
@@ -119,4 +122,4 @@
 
 # - name: Pause 4 debug
 #   pause:
-#     echo: yes
+#     echo: true

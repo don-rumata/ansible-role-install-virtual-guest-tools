@@ -2,7 +2,7 @@
 - name: Install VMware guest utils 4 CentOS\RHEL\Fedora
   when:
     - ansible_os_family == 'RedHat'
-  become: yes
+  become: true
   package:
     name:
       - open-vm-tools
@@ -14,7 +14,7 @@
     - ansible_os_family == 'RedHat'
     - ansible_facts.services["display-manager.service"] is defined
     - ansible_facts.services["display-manager.service"].state == 'active'
-  become: yes
+  become: true
   package:
     name:
       - open-vm-tools-desktop

@@ -2,7 +2,7 @@
 - name: Configure pin file 4 Debian\Ubuntu
   when:
     - ansible_os_family == 'Debian'
-  become: yes
+  become: true
   copy:
     dest: /etc/apt/preferences.d/dependences-4-virtualbox
     mode: '644'
@@ -21,14 +21,14 @@
       Package: virtualbox-guest-utils
       Pin: origin fasttrack.debian.net
       Pin-Priority: 500
-    backup: yes
+    backup: true
 
 # https://backports.debian.org/Instructions/
 - name: Add repo backports 4 Debian Buster
   when:
     - ansible_distribution == 'Debian'
     - ansible_distribution_release == 'buster'
-  become: yes
+  become: true
   apt_repository:
     repo: deb {{ http_or_https }}://deb.debian.org/debian {{ ansible_distribution_release }}-backports main
     state: present
@@ -38,7 +38,7 @@
   when:
     - ansible_distribution == 'Debian'
     - ansible_distribution_release == 'buster'
-  become: yes
+  become: true
   package:
     name:
       - fasttrack-archive-keyring
@@ -50,7 +50,7 @@
   when:
     - ansible_distribution == 'Debian'
     - ansible_distribution_release == 'buster'
-  become: yes
+  become: true
   apt_repository:
     repo: "{{ item }}"
     state: present
@@ -62,7 +62,7 @@
 - name: Install VirtualBox guest utils 4 Debian\Ubuntu
   when:
     - ansible_os_family == 'Debian'
-  become: yes
+  become: true
   block:
     - package:
         name:
@@ -74,14 +74,16 @@
         name:
           - virtualbox-guest-dkms
         state: present
-      when: ansible_distribution_release != 'jammy'
+      when:
+        - ansible_distribution == 'Ubuntu'
+        - "ansible_distribution_version is version('22.04', '<')"
 
 - name: Install VirtualBox guest gui utils 4 Debian\Ubuntu
   when:
     - ansible_os_family == 'Debian'
     - ansible_facts.services["display-manager.service"] is defined
     - ansible_facts.services["display-manager.service"].state == 'active'
-  become: yes
+  become: true
   package:
     name:
       - virtualbox-guest-x11
@@ -92,5 +94,5 @@
     - ansible_distribution == 'Debian'
     - ansible_distribution_release == 'buster'
     - virtualbox_guest_installed_status.changed
-  become: yes
+  become: true
   reboot:

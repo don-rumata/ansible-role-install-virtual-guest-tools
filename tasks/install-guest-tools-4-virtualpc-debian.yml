@@ -14,7 +14,7 @@
 - name: Add module list in initramfs 4 Hyper-V guest utils 4 Debian\Ubuntu
   when:
     - ansible_os_family == 'Debian'
-  become: yes
+  become: true
   blockinfile:
     path: /etc/initramfs-tools/modules
     block: |
@@ -25,14 +25,14 @@
       hv_storvc
       hv_vmbus
     state: present
-    backup: yes
+    backup: true
   register: initramfs_modules_for_hyper_v
 
 # https://reposcope.com/package/hyperv-daemons
 - name: Install Hyper-V guest utils 4 Debian
   when:
     - ansible_distribution == 'Debian'
-  become: yes
+  become: true
   package:
     name:
       - hyperv-daemons
@@ -42,7 +42,7 @@
 - name: Install Hyper-V guest utils 4 Ubuntu
   when:
     - ansible_distribution == 'Ubuntu'
-  become: yes
+  become: true
   package:
     name:
       - linux-cloud-tools-virtual
@@ -54,12 +54,12 @@
   when:
     - ansible_os_family == 'Debian'
     - initramfs_modules_for_hyper_v.changed
-  become: yes
+  become: true
   command: update-initramfs -u
 
 - name: Reboot after update initramfs 4 Debian\Ubuntu
   when:
     - ansible_os_family == 'Debian'
     - initramfs_modules_for_hyper_v.changed
-  become: yes
+  become: true
   reboot:

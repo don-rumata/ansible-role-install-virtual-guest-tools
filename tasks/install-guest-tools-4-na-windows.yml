@@ -3,7 +3,7 @@
   when:
     - ansible_os_family == 'Windows'
     - ansible_system_vendor == 'QEMU'
-  become: yes
+  become: true
   become_method: runas
   become_flags: logon_type=new_credentials logon_flags=netcredentials_only
   win_get_url:
@@ -18,7 +18,7 @@
   when:
     - ansible_os_family == 'Windows'
     - ansible_system_vendor == 'QEMU'
-  become: yes
+  become: true
   become_method: runas
   become_flags: logon_type=new_credentials logon_flags=netcredentials_only
   win_copy:
@@ -41,7 +41,7 @@
   when:
     - ansible_os_family == 'Windows'
     - ansible_system_vendor == 'QEMU'
-  become: yes
+  become: true
   become_method: runas
   become_flags: logon_type=new_credentials logon_flags=netcredentials_only
   win_certificate_store:
@@ -57,7 +57,7 @@
   when:
     - ansible_os_family == 'Windows'
     - ansible_system_vendor == 'QEMU'
-  become: yes
+  become: true
   become_method: runas
   become_flags: logon_type=new_credentials logon_flags=netcredentials_only
   win_package:
@@ -73,7 +73,7 @@
     - ansible_os_family == 'Windows'
     - ansible_system_vendor == 'QEMU'
     - ansible_distribution_major_version == '6'
-  become: yes
+  become: true
   become_method: runas
   become_flags: logon_type=new_credentials logon_flags=netcredentials_only
   win_package:
@@ -91,7 +91,7 @@
     - ansible_os_family == 'Windows'
     - ansible_system_vendor == 'QEMU'
     - ansible_distribution_major_version != '6'
-  become: yes
+  become: true
   become_method: runas
   become_flags: logon_type=new_credentials logon_flags=netcredentials_only
   win_package:
@@ -106,7 +106,7 @@
   when:
     - ansible_os_family == 'Windows'
     - ansible_system_vendor == 'QEMU'
-  become: yes
+  become: true
   become_method: runas
   become_flags: logon_type=new_credentials logon_flags=netcredentials_only
   win_package:
@@ -127,7 +127,7 @@
 #       spice_install_status.changed
 #       or
 #       spice_webdavd_install_status.changed
-#   become: yes
+#   become: true
 #   become_method: runas
 #   become_flags: logon_type=new_credentials logon_flags=netcredentials_only
 #   win_reboot:
@@ -140,7 +140,7 @@
     - ansible_system_vendor == 'VMware, Inc.'
   uri:
     url: "{{ virtual_guest_tools_vmware_versions_url }}"
-    return_content: yes
+    return_content: true
   register: vmware_csv_result
   delegate_to: localhost
 
@@ -192,7 +192,7 @@
   when:
     - ansible_os_family == 'Windows'
     - ansible_system_vendor == 'VMware, Inc.'
-  become: yes
+  become: true
   become_method: runas
   become_flags: logon_type=new_credentials logon_flags=netcredentials_only
   win_package:
@@ -212,7 +212,7 @@
     - ansible_os_family == 'Windows'
     - ansible_system_vendor == 'VMware, Inc.'
     - vmware_tools_install_result.reboot_required == virtual_guest_tools_vmware_win_reboot_after_install
-  become: yes
+  become: true
   become_method: runas
   become_flags: logon_type=new_credentials logon_flags=netcredentials_only
   win_reboot:

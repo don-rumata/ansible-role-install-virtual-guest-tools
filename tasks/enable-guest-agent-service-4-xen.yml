@@ -2,34 +2,34 @@
 - name: Enable Xen guest agent 4 Debian\Ubuntu
   when:
     - ansible_os_family == 'Debian'
-  become: yes
+  become: true
   service:
     name: xe-daemon.service
-    enabled: yes
+    enabled: true
     state: started
 
 - name: Enable Xen guest agent 4 CentOS\RHEL\Fedora
   when:
     - ansible_os_family == 'RedHat'
-  become: yes
+  become: true
   service:
     name: xe-linux-distribution.service
-    enabled: yes
+    enabled: true
     state: started
 
 - name: Enable Xen guest agent 4 openSUSE
   when:
     - ansible_os_family == 'Suse'
-  become: yes
+  become: true
   service:
     name: xe-linux-distribution.service
-    enabled: yes
+    enabled: true
     state: started
 
 - name: Enable Xen guest agent 4 Windows
   when:
     - ansible_os_family == 'Windows'
-  become: yes
+  become: true
   become_method: runas
   become_flags: logon_type=new_credentials logon_flags=netcredentials_only
   win_service:
